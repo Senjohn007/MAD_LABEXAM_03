@@ -33,7 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    // Add this for ViewBinding
+    buildFeatures {
+        viewBinding = true
+    }
 }
+
 
 dependencies {
 
@@ -45,4 +51,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Add these new dependencies for the wellness app
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.mpandroidchart)
+    implementation(libs.gson)
+
+
 }
