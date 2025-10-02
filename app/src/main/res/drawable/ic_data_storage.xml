@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Server rack/storage system icon -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M4,2h16v2H4V2zM4,6h16v2H4V6zM4,10h16v2H4V10zM4,14h16v2H4V14zM4,18h16v2H4V18z"/>
+
+    <!-- Server details -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M6,3v1h1V3H6zM6,7v1h1V7H6zM6,11v1h1v-1H6zM6,15v1h1v-1H6zM6,19v1h1v-1H6zM8,3v1h1V3H8zM8,7v1h1V7H8zM8,11v1h1v-1H8zM8,15v1h1v-1H8zM8,19v1h1v-1H8zM10,3v1h1V3H10zM10,7v1h1V7H10zM10,11v1h1v-1H10zM10,15v1h1v-1H10zM10,19v1h1v-1H10z"/>
+
+    <!-- Activity lights -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M15,3.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5S15.78,4 15.5,4S15,3.78 15,3.5zM15,7.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5S15.78,8 15.5,8S15,7.78 15,7.5zM15,11.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5s-0.22,0.5 -0.5,0.5S15,11.78 15,11.5zM15,15.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5s-0.22,0.5 -0.5,0.5S15,15.78 15,15.5zM15,19.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5s-0.22,0.5 -0.5,0.5S15,19.78 15,19.5zM17,3.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5S17.78,4 17.5,4S17,3.78 17,3.5zM17,7.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5S17.78,8 17.5,8S17,7.78 17,7.5zM17,11.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5s-0.22,0.5 -0.5,0.5S17,11.78 17,11.5zM17,15.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5s-0.22,0.5 -0.5,0.5S17,15.78 17,15.5zM17,19.5c0,-0.28 0.22,-0.5 0.5,-0.5s0.5,0.22 0.5,0.5s-0.22,0.5 -0.5,0.5S17,19.78 17,19.5z"/>
+</vector>

@@ -2,6 +2,8 @@ package com.example.wellnesstracker
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.wellnesstracker.models.HydrationSettings
+import com.example.wellnesstracker.models.MoodEntry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
