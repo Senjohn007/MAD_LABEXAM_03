@@ -2,6 +2,8 @@ package com.example.wellnesstracker
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,95 +13,151 @@ import com.example.wellnesstracker.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        // Apply window insets for edge-to-edge display
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        try {
+            Log.d(TAG, "MainActivity onCreate started")
 
-        // Set up the toolbar
-        setSupportActionBar(binding.toolbar)
+            enableEdgeToEdge()
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        // Set up bottom navigation
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    // Already in home, do nothing or refresh
-                    true
-                }
-                R.id.nav_hydration -> {
-                    // Navigate to HydrationActivity
-                    navigateToHydration()
-                    true
-                }
-                R.id.nav_mood -> {
-                    // Navigate to MoodActivity
-                    navigateToMood()
-                    true
-                }
-                R.id.nav_steps -> {
-                    // Navigate to StepsActivity
-                    navigateToSteps()
-                    true
-                }
-                else -> false
+            ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
             }
-        }
 
-        // Set up click listeners for the cards
-        binding.cardHydration.setOnClickListener {
-            binding.bottomNavigation.selectedItemId = R.id.nav_hydration
-            navigateToHydration()
-        }
+            setupToolbar()
+            setupBottomNavigation()
+            setupCardClickListeners()
+            setupProfileClickListener()
 
-        binding.cardMood.setOnClickListener {
-            binding.bottomNavigation.selectedItemId = R.id.nav_mood
-            navigateToMood()
-        }
+            Log.d(TAG, "MainActivity onCreate completed successfully")
 
-        binding.cardSteps.setOnClickListener {
-            binding.bottomNavigation.selectedItemId = R.id.nav_steps
-            navigateToSteps()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error in MainActivity onCreate", e)
+            showToast("Error initializing app: ${e.message}")
         }
+    }
 
-        // Set up profile icon click listener
-        binding.ivProfile.setOnClickListener {
-            // Navigate to ProfileActivity or show profile dialog
-            navigateToProfile()
+    private fun setupToolbar() {
+        try {
+            setSupportActionBar(binding.toolbar)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up toolbar", e)
+        }
+    }
+
+    private fun setupBottomNavigation() {
+        try {
+            binding.bottomNavigation.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.nav_home -> {
+                        showToast("Home")
+                        true
+                    }
+                    R.id.nav_hydration -> {
+                        navigateToHydration()
+                        true
+                    }
+                    R.id.nav_mood -> {
+                        navigateToMood()
+                        true
+                    }
+                    R.id.nav_steps -> {
+                        navigateToSteps()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up bottom navigation", e)
+        }
+    }
+
+    private fun setupCardClickListeners() {
+        try {
+            binding.cardHydration.setOnClickListener {
+                binding.bottomNavigation.selectedItemId = R.id.nav_hydration
+            }
+
+            binding.cardMood.setOnClickListener {
+                binding.bottomNavigation.selectedItemId = R.id.nav_mood
+            }
+
+            binding.cardSteps.setOnClickListener {
+                binding.bottomNavigation.selectedItemId = R.id.nav_steps
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up card click listeners", e)
+        }
+    }
+
+    private fun setupProfileClickListener() {
+        try {
+            binding.ivProfile.setOnClickListener {
+                navigateToProfile()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up profile click listener", e)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        // Ensure home is selected when returning to MainActivity
-        binding.bottomNavigation.selectedItemId = R.id.nav_home
+        try {
+            binding.bottomNavigation.selectedItemId = R.id.nav_home
+        } catch (e: Exception) {
+            Log.e(TAG, "Error in onResume", e)
+        }
     }
 
     private fun navigateToHydration() {
-        val intent = Intent(this, HydrationActivity::class.java)
-        startActivity(intent)
+        try {
+            val intent = Intent(this, HydrationActivity::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            showToast("Hydration Tracker - Coming Soon!")
+        }
     }
 
     private fun navigateToMood() {
-        val intent = Intent(this, MoodActivity::class.java)
-        startActivity(intent)
+        try {
+            val intent = Intent(this, MoodActivity::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            showToast("Mood Journal - Coming Soon!")
+        }
     }
 
     private fun navigateToSteps() {
-        val intent = Intent(this, StepsActivity::class.java)
-        startActivity(intent)
+        try {
+            val intent = Intent(this, StepsActivity::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            showToast("Step Counter - Coming Soon!")
+        }
     }
 
     private fun navigateToProfile() {
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
+        try {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            showToast("Profile Settings - Coming Soon!")
+        }
+    }
+
+    private fun showToast(message: String) {
+        try {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error showing toast", e)
+        }
     }
 }

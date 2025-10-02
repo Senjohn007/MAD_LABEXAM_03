@@ -48,19 +48,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation("com.google.android.material:material:1.12.0")
+    // Add back navigation dependencies for selectedItemId
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // Add these new dependencies for the wellness app
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.androidx.viewpager2)
-    implementation(libs.mpandroidchart)
-    implementation(libs.gson)
 
 
 }

@@ -4,14 +4,17 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
         android:title="Home" />
+
     <item
         android:id="@+id/nav_hydration"
         android:icon="@drawable/ic_hydration"
         android:title="Hydration" />
+
     <item
         android:id="@+id/nav_mood"
         android:icon="@drawable/ic_mood"
         android:title="Mood" />
+
     <item
         android:id="@+id/nav_steps"
         android:icon="@drawable/ic_steps"

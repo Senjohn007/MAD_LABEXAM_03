@@ -1,7 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.WellnessTracker" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.WellnessTracker" parent="Theme.MaterialComponents.DayNight.Bridge">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
     </style>
+
+    <style name="Theme.WellnessTracker" parent="Base.Theme.WellnessTracker" />
 </resources>
