@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_gradient_background">
+
+    <!-- Main Content Container with Card Effect -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        android:backgroundTint="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="48dp">
+
+            <!-- Wellness Logo/Icon with Shadow -->
+            <ImageView
+                android:id="@+id/iv_splash_logo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_wellness_heart"
+                android:contentDescription="Wellness Tracker Logo"
+                android:layout_marginBottom="24dp"
+                android:elevation="4dp" />
+
+            <!-- App Name with Modern Typography -->
+            <TextView
+                android:id="@+id/tv_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wellness Tracker"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.05" />
+
+            <!-- Tagline with Subtle Styling -->
+            <TextView
+                android:id="@+id/tv_tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your journey to better health starts here"
+                android:textSize="16sp"
+                android:textColor="#546E7A"
+                android:gravity="center"
+                android:layout_marginBottom="40dp"
+                android:alpha="0.9" />
+
+            <!-- Modern Progress Indicator -->
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="#1976D2"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Loading Text with Animation Hint -->
+            <TextView
+                android:id="@+id/tv_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preparing your wellness journey..."
+                android:textSize="14sp"
+                android:textColor="#546E7A"
+                android:gravity="center"
+                android:alpha="0.8" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Decorative Elements -->
+    <View
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginTop="-60dp"
+        android:layout_marginStart="-60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0.1" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginEnd="-40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

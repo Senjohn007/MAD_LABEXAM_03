@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="1dp">
+    app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,26 +13,48 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- Date -->
-        <TextView
-            android:id="@+id/tv_date"
+        <ImageView
+            android:id="@+id/iv_step_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_steps"
+            android:contentDescription="Step Icon" />
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Today"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary" />
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
 
-        <!-- Step Count -->
+            <TextView
+                android:id="@+id/tv_step_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5,432 steps"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/tv_step_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auto Detected"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/tv_steps"
+            android:id="@+id/tv_step_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8,542 steps"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#4CAF50" />
+            android:text="14:30"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
 
     </LinearLayout>
 

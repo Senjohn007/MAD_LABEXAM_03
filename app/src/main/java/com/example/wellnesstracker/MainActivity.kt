@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigation.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.nav_home -> {
-                        showToast("Home")
+                        // Already on home, show confirmation
+                        showToast("You're on the Home screen")
                         true
                     }
                     R.id.nav_hydration -> {
@@ -72,7 +73,10 @@ class MainActivity : AppCompatActivity() {
                         navigateToSteps()
                         true
                     }
-                    else -> false
+                    else -> {
+                        Log.w(TAG, "Unknown navigation item selected: ${item.itemId}")
+                        false
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -83,14 +87,17 @@ class MainActivity : AppCompatActivity() {
     private fun setupCardClickListeners() {
         try {
             binding.cardHydration.setOnClickListener {
+                Log.d(TAG, "Hydration card clicked")
                 binding.bottomNavigation.selectedItemId = R.id.nav_hydration
             }
 
             binding.cardMood.setOnClickListener {
+                Log.d(TAG, "Mood card clicked")
                 binding.bottomNavigation.selectedItemId = R.id.nav_mood
             }
 
             binding.cardSteps.setOnClickListener {
+                Log.d(TAG, "Steps card clicked")
                 binding.bottomNavigation.selectedItemId = R.id.nav_steps
             }
         } catch (e: Exception) {
@@ -101,6 +108,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupProfileClickListener() {
         try {
             binding.ivProfile.setOnClickListener {
+                Log.d(TAG, "Profile icon clicked")
                 navigateToProfile()
             }
         } catch (e: Exception) {
@@ -111,7 +119,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         try {
+            // Ensure home is selected when returning to MainActivity
             binding.bottomNavigation.selectedItemId = R.id.nav_home
+            Log.d(TAG, "MainActivity resumed, home navigation selected")
         } catch (e: Exception) {
             Log.e(TAG, "Error in onResume", e)
         }
@@ -119,36 +129,44 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToHydration() {
         try {
+            Log.d(TAG, "Navigating to HydrationActivity")
             val intent = Intent(this, HydrationActivity::class.java)
             startActivity(intent)
         } catch (e: Exception) {
-            showToast("Hydration Tracker - Coming Soon!")
+            Log.e(TAG, "Error navigating to HydrationActivity", e)
+            showToast("Unable to open Hydration Tracker")
         }
     }
 
     private fun navigateToMood() {
         try {
+            Log.d(TAG, "Navigating to MoodActivity")
             val intent = Intent(this, MoodActivity::class.java)
             startActivity(intent)
         } catch (e: Exception) {
-            showToast("Mood Journal - Coming Soon!")
+            Log.e(TAG, "Error navigating to MoodActivity", e)
+            showToast("Unable to open Mood Journal")
         }
     }
 
     private fun navigateToSteps() {
         try {
+            Log.d(TAG, "Navigating to StepsActivity")
             val intent = Intent(this, StepsActivity::class.java)
             startActivity(intent)
         } catch (e: Exception) {
-            showToast("Step Counter - Coming Soon!")
+            Log.e(TAG, "Error navigating to StepsActivity", e)
+            showToast("Unable to open Step Counter")
         }
     }
 
     private fun navigateToProfile() {
         try {
+            Log.d(TAG, "Attempting to navigate to ProfileActivity")
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         } catch (e: Exception) {
+            Log.e(TAG, "ProfileActivity not implemented yet", e)
             showToast("Profile Settings - Coming Soon!")
         }
     }
@@ -159,5 +177,15 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Error showing toast", e)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "MainActivity destroyed")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "MainActivity paused")
     }
 }

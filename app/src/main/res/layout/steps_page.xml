@@ -4,7 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/splash_gradient_background">
+
+    <!-- Decorative Elements -->
+    <View
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginTop="-60dp"
+        android:layout_marginStart="-60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0.1" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginEnd="-40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.1" />
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
@@ -22,7 +43,7 @@
             android:background="@color/white"
             app:navigationIcon="@drawable/ic_back"
             app:title="Step Counter"
-            app:titleTextColor="@color/text_primary" />
+            app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,8 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#E8F5E9">
 
                 <LinearLayout
@@ -61,7 +82,7 @@
                         android:text="Today's Steps"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:textColor="#1976D2"
                         android:gravity="center"
                         android:layout_marginBottom="20dp" />
 
@@ -74,11 +95,14 @@
                         android:layout_marginBottom="16dp">
 
                         <!-- Step Icon -->
-                        <ImageView
+                        <TextView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_steps_large"
-                            android:contentDescription="Steps" />
+                            android:text="👟"
+                            android:textSize="36sp"
+                            android:gravity="center"
+                            android:background="#C8E6C9"
+                            android:padding="8dp" />
 
                         <!-- Step Count -->
                         <LinearLayout
@@ -94,7 +118,7 @@
                                 android:text="8,542"
                                 android:textSize="32sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/text_primary" />
+                                android:textColor="#1976D2" />
 
                             <TextView
                                 android:id="@+id/tv_step_goal"
@@ -102,7 +126,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="of 10,000 steps"
                                 android:textSize="16sp"
-                                android:textColor="@color/text_secondary" />
+                                android:textColor="#546E7A" />
 
                         </LinearLayout>
 
@@ -138,8 +162,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#F5F5F5">
 
                 <LinearLayout
@@ -154,7 +178,7 @@
                         android:text="Activity Summary"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:textColor="#1976D2"
                         android:layout_marginBottom="16dp" />
 
                     <!-- Distance -->
@@ -170,7 +194,7 @@
                             android:layout_weight="1"
                             android:text="Distance"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#546E7A" />
 
                         <TextView
                             android:id="@+id/tv_distance"
@@ -179,7 +203,7 @@
                             android:text="6.2 km"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                     </LinearLayout>
 
@@ -196,7 +220,7 @@
                             android:layout_weight="1"
                             android:text="Calories Burned"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#546E7A" />
 
                         <TextView
                             android:id="@+id/tv_calories"
@@ -205,7 +229,7 @@
                             android:text="342 cal"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                     </LinearLayout>
 
@@ -221,7 +245,7 @@
                             android:layout_weight="1"
                             android:text="Active Time"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#546E7A" />
 
                         <TextView
                             android:id="@+id/tv_active_time"
@@ -230,7 +254,7 @@
                             android:text="1h 24m"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                     </LinearLayout>
 
@@ -245,7 +269,7 @@
                 android:text="Add Steps Manually"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
             <!-- Manual Entry Layout -->
@@ -265,8 +289,8 @@
                     android:hint="Enter steps"
                     android:inputType="number"
                     android:padding="16dp"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_secondary"
+                    android:textColor="#1976D2"
+                    android:textColorHint="#546E7A"
                     android:textSize="16sp" />
 
                 <Button
@@ -287,7 +311,7 @@
                 android:text="Step History"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
             <!-- Step History List -->
@@ -303,8 +327,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#F5F5F5">
 
                 <LinearLayout
@@ -319,7 +343,7 @@
                         android:text="Weekly Progress"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:textColor="#1976D2"
                         android:layout_marginBottom="16dp" />
 
                     <!-- Chart Placeholder -->
@@ -344,7 +368,7 @@
                             android:layout_weight="1"
                             android:text="Average: 7,842 steps/day"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:gravity="center" />
 
                         <TextView
@@ -353,7 +377,7 @@
                             android:layout_weight="1"
                             android:text="Best: 10,523 steps"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:gravity="center" />
 
                     </LinearLayout>
@@ -370,7 +394,7 @@
                 android:text="Set Daily Goal"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
+                android:textColor="#1976D2"
                 android:background="@drawable/button_secondary"
                 android:layout_marginBottom="24dp" />
 

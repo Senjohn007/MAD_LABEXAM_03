@@ -4,7 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/splash_gradient_background">
+
+    <!-- Decorative Elements -->
+    <View
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginTop="-60dp"
+        android:layout_marginStart="-60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0.1" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginEnd="-40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.1" />
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
@@ -22,7 +43,7 @@
             android:background="@color/white"
             app:navigationIcon="@drawable/ic_back"
             app:title="Mood Journal"
-            app:titleTextColor="@color/text_primary" />
+            app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,8 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#E3F2FD">
 
                 <LinearLayout
@@ -61,7 +82,7 @@
                         android:text="How are you feeling today?"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:textColor="#1976D2"
                         android:gravity="center"
                         android:layout_marginBottom="20dp" />
 
@@ -83,8 +104,8 @@
 
                             <TextView
                                 android:id="@+id/tv_mood_very_happy"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
                                 android:text="😄"
                                 android:textSize="32sp"
                                 android:gravity="center"
@@ -97,7 +118,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Great"
                                 android:textSize="12sp"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="#546E7A"
                                 android:layout_marginTop="4dp" />
 
                         </LinearLayout>
@@ -112,8 +133,8 @@
 
                             <TextView
                                 android:id="@+id/tv_mood_happy"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
                                 android:text="😊"
                                 android:textSize="32sp"
                                 android:gravity="center"
@@ -126,7 +147,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Good"
                                 android:textSize="12sp"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="#546E7A"
                                 android:layout_marginTop="4dp" />
 
                         </LinearLayout>
@@ -141,8 +162,8 @@
 
                             <TextView
                                 android:id="@+id/tv_mood_neutral"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
                                 android:text="😐"
                                 android:textSize="32sp"
                                 android:gravity="center"
@@ -155,7 +176,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Okay"
                                 android:textSize="12sp"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="#546E7A"
                                 android:layout_marginTop="4dp" />
 
                         </LinearLayout>
@@ -170,8 +191,8 @@
 
                             <TextView
                                 android:id="@+id/tv_mood_sad"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
                                 android:text="😔"
                                 android:textSize="32sp"
                                 android:gravity="center"
@@ -184,7 +205,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Sad"
                                 android:textSize="12sp"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="#546E7A"
                                 android:layout_marginTop="4dp" />
 
                         </LinearLayout>
@@ -199,8 +220,8 @@
 
                             <TextView
                                 android:id="@+id/tv_mood_very_sad"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
                                 android:text="😢"
                                 android:textSize="32sp"
                                 android:gravity="center"
@@ -213,7 +234,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Awful"
                                 android:textSize="12sp"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="#546E7A"
                                 android:layout_marginTop="4dp" />
 
                         </LinearLayout>
@@ -230,8 +251,8 @@
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:padding="16dp"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColor="#1976D2"
+                        android:textColorHint="#546E7A"
                         android:textSize="16sp"
                         android:layout_marginBottom="16dp" />
 
@@ -257,7 +278,7 @@
                 android:text="Mood History"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
             <!-- View Toggle (List/Calendar) -->
@@ -275,7 +296,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_toggle_selected"
                     android:text="List View"
-                    android:textColor="@color/text_primary"
+                    android:textColor="#1976D2"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -287,7 +308,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_toggle_unselected"
                     android:text="Calendar View"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="#546E7A"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -306,8 +327,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#F5F5F5">
 
                 <LinearLayout
@@ -322,7 +343,7 @@
                         android:text="Weekly Mood Insights"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:textColor="#1976D2"
                         android:layout_marginBottom="12dp" />
 
                     <!-- Mood Distribution -->
@@ -338,7 +359,7 @@
                             android:layout_weight="1"
                             android:text="Most Common:"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#546E7A" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -362,7 +383,7 @@
                             android:layout_weight="1"
                             android:text="Trend:"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#546E7A" />
 
                         <TextView
                             android:layout_width="wrap_content"

@@ -13,15 +13,20 @@
         android:theme="@style/Theme.WellnessTracker"
         tools:targetApi="31">
 
-        <!-- FirstOnboard - Launcher activity -->
+        <!-- SplashActivity - New launcher activity -->
         <activity
-            android:name=".FirstOnboard"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- FirstOnboard - Now a regular activity -->
+        <activity
+            android:name=".FirstOnboard"
+            android:exported="false" />
 
         <!-- SecondOnboard - Regular activity -->
         <activity
@@ -58,14 +63,26 @@
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- Keep these commented out until you create the actual classes -->
-        <!--
+        <!-- StepsActivity - Working activity -->
         <activity
             android:name=".StepsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <!-- Keep this commented out until you create the actual class -->
+        <!--
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         -->
 
     </application>
