@@ -3,60 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv_mood_emoji"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="😊"
-            android:textSize="24sp"
-            android:gravity="center" />
-
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_mood_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Good mood"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary" />
+                android:id="@+id/tv_mood_emoji"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="😊"
+                android:textSize="32sp"
+                android:gravity="center"
+                android:background="@drawable/circle_background" />
 
-            <TextView
-                android:id="@+id/tv_mood_note"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Had a great day!"
-                android:textSize="14sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginTop="2dp"
-                android:visibility="gone" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
 
-            <TextView
-                android:id="@+id/tv_mood_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Oct 02, 2025 at 20:30"
-                android:textSize="12sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginTop="4dp" />
+                <TextView
+                    android:id="@+id/tv_mood_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Good mood"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+
+                <TextView
+                    android:id="@+id/tv_mood_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oct 05, 2025 at 14:30"
+                    android:textSize="12sp"
+                    android:textColor="#546E7A"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_mood_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Optional note goes here"
+            android:textSize="14sp"
+            android:textColor="#424242"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:background="#F5F5F5"
+            android:visibility="gone" />
 
     </LinearLayout>
 

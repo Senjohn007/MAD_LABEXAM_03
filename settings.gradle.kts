@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") } // Fixed: added closing brace here
+        maven { url = uri("https://jitpack.io") } // Add this line
     }
 }
 

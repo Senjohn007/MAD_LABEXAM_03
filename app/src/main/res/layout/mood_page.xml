@@ -273,6 +273,7 @@
 
             <!-- Mood History Section -->
             <TextView
+                android:id="@+id/tv_mood_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mood History"
@@ -281,38 +282,23 @@
                 android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
-            <!-- View Toggle (List/Calendar) -->
-            <LinearLayout
+            <!-- Show Trend Button -->
+
+            <!-- Mood Chart -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
-                <Button
-                    android:id="@+id/btn_list_view"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_toggle_selected"
-                    android:text="List View"
-                    android:textColor="#1976D2"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/line_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_margin="8dp" />
 
-                <Button
-                    android:id="@+id/btn_calendar_view"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_toggle_unselected"
-                    android:text="Calendar View"
-                    android:textColor="#546E7A"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- Mood History List -->
             <androidx.recyclerview.widget.RecyclerView
@@ -362,6 +348,7 @@
                             android:textColor="#546E7A" />
 
                         <TextView
+                            android:id="@+id/tv_most_common_mood"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Good 😊"
@@ -386,9 +373,10 @@
                             android:textColor="#546E7A" />
 
                         <TextView
+                            android:id="@+id/tv_mood_trend"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Improving ↗"
+                            android:text="Stable →"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#4CAF50" />
