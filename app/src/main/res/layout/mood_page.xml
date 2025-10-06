@@ -4,55 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_gradient_background">
+    android:background="@drawable/splash_gradient_background"
+    android:fitsSystemWindows="true"
+    tools:context=".MoodActivity">
 
     <!-- Decorative Elements -->
     <View
+        android:id="@+id/decorative_top"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/circle_decorative"
         android:layout_marginTop="-60dp"
         android:layout_marginStart="-60dp"
+        android:alpha="0.1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:alpha="0.1" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
+        android:id="@+id/decorative_bottom"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/circle_decorative"
         android:layout_marginBottom="-40dp"
         android:layout_marginEnd="-40dp"
+        android:alpha="0.1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:alpha="0.1" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Top App Bar -->
+    <!-- Status Bar Spacer -->
+    <View
+        android:id="@+id/status_bar_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Top App Bar - Positioned Lower -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_marginTop="16dp"
         app:elevation="2dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/status_bar_spacer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:navigationIcon="@drawable/ic_back"
-            app:title="Mood Journal"
+            app:title="Mood Journal Page"
             app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Main Content -->
     <ScrollView
-        android:layout_width="match_parent"
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,6 +82,7 @@
 
             <!-- Current Mood Selection Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/mood_selection_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -77,6 +98,7 @@
 
                     <!-- Title -->
                     <TextView
+                        android:id="@+id/tv_mood_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="How are you feeling today?"
@@ -88,6 +110,7 @@
 
                     <!-- Mood Emoji Selector -->
                     <LinearLayout
+                        android:id="@+id/mood_selector_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -282,15 +305,15 @@
                 android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Show Trend Button -->
-
             <!-- Mood Chart -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/chart_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/line_chart"
@@ -310,6 +333,7 @@
 
             <!-- Mood Insights Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/insights_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"

@@ -14,7 +14,6 @@ class ThirdOnboard : AppCompatActivity() {
 
         // Find buttons
         val btnGetStarted = findViewById<Button>(R.id.btn_get_started)
-        val tvSkip = findViewById<TextView>(R.id.tv_skip_step3)
 
         // Get Started button - Navigate to MainActivity (simplified)
         btnGetStarted.setOnClickListener {
@@ -22,10 +21,5 @@ class ThirdOnboard : AppCompatActivity() {
             finish()
         }
 
-        // Skip/Customize later button - Navigate to MainActivity (simplified)
-        tvSkip.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
     }
 }

@@ -24,7 +24,7 @@ class FirstOnboard : AppCompatActivity() {
 
         // Skip button - Navigate to SecondOnboard
         tvSkip.setOnClickListener {
-            val intent = Intent(this, SecondOnboard::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

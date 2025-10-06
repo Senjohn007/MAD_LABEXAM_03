@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="25dp">
 
             <!-- Progress Indicator -->
             <TextView
@@ -450,20 +450,6 @@
                 android:background="@drawable/button_primary"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="16dp" />
-
-            <!-- Skip Button -->
-            <TextView
-                android:id="@+id/tv_skip_step3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Customize later"
-                android:textSize="14sp"
-                android:textColor="#546E7A"
-                android:padding="16dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

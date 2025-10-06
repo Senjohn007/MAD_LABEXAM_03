@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="25dp">
 
             <!-- Progress Indicator -->
             <TextView
@@ -40,7 +40,7 @@
                 android:id="@+id/tv_experience_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="What's Your Experience Level?"
+                android:text="Suitable for any level of experience !"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2"
@@ -52,7 +52,7 @@
                 android:id="@+id/tv_experience_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Help us personalize your wellness plan"
+                android:text="Help yourself by understanding your level"
                 android:textSize="18sp"
                 android:textColor="#546E7A"
                 android:gravity="center"
@@ -141,14 +141,6 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_beginner_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -204,14 +196,6 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_intermediate_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -267,14 +251,6 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_advanced_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -296,7 +272,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Based on your selection, we'll enable:"
+                                android:text="Whatever the level you are in, we'll enable:"
                                 android:textSize="16sp"
                                 android:textColor="#1976D2"
                                 android:layout_marginBottom="12dp" />
@@ -388,19 +364,6 @@
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Skip Button -->
-            <TextView
-                android:id="@+id/tv_skip_step2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Skip for now"
-                android:textSize="14sp"
-                android:textColor="#546E7A"
-                android:padding="16dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="25dp">
 
             <!-- Progress Indicator -->
             <TextView
@@ -141,14 +141,6 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_fitness_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -204,14 +196,7 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_hydration_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -267,14 +252,7 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_mood_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -330,14 +308,7 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_stress_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -393,14 +364,7 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_sleep_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -456,14 +420,6 @@
 
                             </LinearLayout>
 
-                            <!-- Selection indicator -->
-                            <ImageView
-                                android:id="@+id/iv_weight_selected"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_radio_unselected"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Selection Indicator" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 

@@ -4,34 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".HydrationActivity">
 
-    <!-- Top App Bar -->
+    <!-- Status Bar Spacer -->
+    <View
+        android:id="@+id/status_bar_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Top App Bar - Positioned Lower -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_marginTop="16dp"
         app:elevation="2dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/status_bar_spacer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:navigationIcon="@drawable/ic_back"
-            app:title="Hydration Tracker"
+            app:title="Hydration Tracker Page"
             app:titleTextColor="@color/text_primary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Main Content -->
     <ScrollView
-        android:layout_width="match_parent"
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,6 +59,7 @@
 
             <!-- Daily Goal Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/daily_goal_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -56,6 +75,7 @@
 
                     <!-- Title -->
                     <TextView
+                        android:id="@+id/tv_daily_goal_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Daily Goal"
@@ -128,6 +148,7 @@
 
             <!-- Add Water Section -->
             <TextView
+                android:id="@+id/tv_add_water_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Water"
@@ -138,6 +159,7 @@
 
             <!-- Water Amount Buttons -->
             <LinearLayout
+                android:id="@+id/water_buttons_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -181,6 +203,7 @@
 
             <!-- Custom Amount -->
             <LinearLayout
+                android:id="@+id/custom_amount_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -213,6 +236,7 @@
 
             <!-- Today's Intake History -->
             <TextView
+                android:id="@+id/tv_todays_intake_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Today's Intake"
@@ -227,7 +251,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                tools:listitem="@layout/item_intake_history" />
+                tools:listitem="@layout/item_hydration" />
 
             <!-- Reminder Settings Card -->
             <androidx.cardview.widget.CardView
@@ -239,7 +263,8 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -248,6 +273,7 @@
                     android:padding="20dp">
 
                     <ImageView
+                        android:id="@+id/iv_reminder_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_reminder"
@@ -280,6 +306,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/iv_reminder_arrow"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"

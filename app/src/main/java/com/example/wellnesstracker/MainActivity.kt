@@ -165,9 +165,10 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "Attempting to navigate to ProfileActivity")
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            Log.d(TAG, "Successfully navigated to ProfileActivity")
         } catch (e: Exception) {
-            Log.e(TAG, "ProfileActivity not implemented yet", e)
-            showToast("Profile Settings - Coming Soon!")
+            Log.e(TAG, "Error navigating to ProfileActivity", e)
+            showToast("Unable to open Profile Page")
         }
     }
 

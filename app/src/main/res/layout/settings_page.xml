@@ -4,7 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="@drawable/splash_gradient_background">
+
+    <!-- Decorative Elements -->
+    <View
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginTop="-60dp"
+        android:layout_marginStart="-60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0.1" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginEnd="-40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.1" />
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
@@ -12,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_marginTop="64dp"
         app:elevation="2dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -20,9 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:navigationIcon="@drawable/ic_back"
-            app:title="Settings"
-            app:titleTextColor="@color/text_primary" />
+            app:title="Settings Page"
+            app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,7 +67,7 @@
                 android:text="Notifications"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
             <!-- Hydration Reminders Card -->
@@ -54,8 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -64,11 +85,14 @@
                     android:padding="20dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_hydration_reminder"
-                        android:contentDescription="Hydration Reminders" />
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="💧"
+                        android:textSize="28sp"
+                        android:gravity="center"
+                        android:background="#E3F2FD"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -83,7 +107,7 @@
                             android:text="Hydration Reminders"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                         <TextView
                             android:id="@+id/tv_hydration_reminder_status"
@@ -91,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:text="Every 2 hours"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
 
                     </LinearLayout>
@@ -112,9 +136,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,11 +147,14 @@
                     android:padding="20dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_mood_reminder"
-                        android:contentDescription="Mood Reminders" />
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="😊"
+                        android:textSize="28sp"
+                        android:gravity="center"
+                        android:background="#E3F2FD"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -142,7 +169,7 @@
                             android:text="Mood Check-ins"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                         <TextView
                             android:id="@+id/tv_mood_reminder_status"
@@ -150,7 +177,7 @@
                             android:layout_height="wrap_content"
                             android:text="Daily at 9:00 PM"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
 
                     </LinearLayout>
@@ -174,7 +201,7 @@
                 android:text="General"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="#1976D2"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp" />
 
@@ -187,8 +214,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -197,11 +224,14 @@
                     android:padding="20dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_units"
-                        android:contentDescription="Units" />
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="📏"
+                        android:textSize="28sp"
+                        android:gravity="center"
+                        android:background="#E3F2FD"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -216,7 +246,7 @@
                             android:text="Units"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                         <TextView
                             android:id="@+id/tv_units_summary"
@@ -224,7 +254,7 @@
                             android:layout_height="wrap_content"
                             android:text="Metric"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
 
                     </LinearLayout>
@@ -233,7 +263,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:contentDescription="Navigate" />
+                        android:contentDescription="Navigate"
+                        app:tint="#1976D2" />
 
                 </LinearLayout>
 
@@ -243,9 +274,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -254,11 +285,14 @@
                     android:padding="20dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_dark_mode"
-                        android:contentDescription="Dark Mode" />
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="🌙"
+                        android:textSize="28sp"
+                        android:gravity="center"
+                        android:background="#E3F2FD"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -273,14 +307,14 @@
                             android:text="Dark Mode"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Easier on the eyes at night"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
 
                     </LinearLayout>
@@ -304,7 +338,7 @@
                 android:text="Privacy and Security"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="#1976D2"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp" />
 
@@ -317,8 +351,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -327,11 +361,14 @@
                     android:padding="20dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_privacy"
-                        android:contentDescription="Privacy Policy" />
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="🔒"
+                        android:textSize="28sp"
+                        android:gravity="center"
+                        android:background="#FFF8E1"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -346,14 +383,14 @@
                             android:text="Privacy Policy"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="How we handle your data"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
 
                     </LinearLayout>
@@ -362,7 +399,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:contentDescription="Navigate" />
+                        android:contentDescription="Navigate"
+                        app:tint="#1976D2" />
 
                 </LinearLayout>
 
@@ -377,8 +415,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -387,11 +425,14 @@
                     android:padding="20dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_data_storage"
-                        android:contentDescription="Data and Storage" />
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="💾"
+                        android:textSize="28sp"
+                        android:gravity="center"
+                        android:background="#FFF8E1"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -406,14 +447,14 @@
                             android:text="Data and Storage"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textColor="#1976D2" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Manage your data and storage"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
 
                     </LinearLayout>
@@ -422,7 +463,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:contentDescription="Navigate" />
+                        android:contentDescription="Navigate"
+                        app:tint="#1976D2" />
 
                 </LinearLayout>
 
