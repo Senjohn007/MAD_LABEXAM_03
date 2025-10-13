@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="Step 3 of 3"
+                android:text="@string/progress_step_3"
                 android:textSize="14sp"
                 android:textColor="#1976D2"
                 android:layout_marginBottom="24dp" />
@@ -40,7 +40,7 @@
                 android:id="@+id/tv_completion_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You're All Set!"
+                android:text="@string/completion_title"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2"
@@ -52,7 +52,7 @@
                 android:id="@+id/tv_completion_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your personalized wellness journey is ready"
+                android:text="@string/completion_subtitle"
                 android:textSize="18sp"
                 android:textColor="#546E7A"
                 android:gravity="center"
@@ -73,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_wellness_complete"
                     android:padding="24dp"
-                    android:contentDescription="Completion Icon" />
+                    android:contentDescription="@string/completion_icon_description" />
             </androidx.cardview.widget.CardView>
 
             <!-- Scrollable Content -->
@@ -108,7 +108,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Your Wellness Plan"
+                                android:text="@string/summary_title"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
                                 android:textColor="#1976D2"
@@ -140,7 +140,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Primary Goal"
+                                        android:text="@string/summary_goal_label"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A" />
 
@@ -148,7 +148,7 @@
                                         android:id="@+id/tv_goal_summary"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Improve Fitness"
+                                        android:text="@string/summary_goal_example"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -182,7 +182,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Experience Level"
+                                        android:text="@string/summary_experience_label"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A" />
 
@@ -190,7 +190,7 @@
                                         android:id="@+id/tv_experience_summary"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Intermediate"
+                                        android:text="@string/summary_experience_example"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -223,14 +223,14 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Next Steps"
+                                        android:text="@string/summary_next_steps_label"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Start with a 7-day beginner plan"
+                                        android:text="@string/summary_next_steps_text"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -260,7 +260,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Your Wellness Tools"
+                                android:text="@string/features_title"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
                                 android:textColor="#1976D2"
@@ -292,7 +292,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Daily Habit Tracker"
+                                        android:text="@string/feature_habit_tracker_title"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -300,7 +300,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Track and complete your wellness habits"
+                                        android:text="@string/feature_habit_tracker_description"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A"
                                         android:layout_marginTop="4dp" />
@@ -334,7 +334,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Mood Journal"
+                                        android:text="@string/feature_mood_journal_title"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -342,7 +342,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Log emotions with emoji selector"
+                                        android:text="@string/feature_mood_journal_description"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A"
                                         android:layout_marginTop="4dp" />
@@ -376,7 +376,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Hydration Reminder"
+                                        android:text="@string/feature_hydration_reminder_title"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -384,7 +384,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Customizable water intake reminders"
+                                        android:text="@string/feature_hydration_reminder_description"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A"
                                         android:layout_marginTop="4dp" />
@@ -417,7 +417,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Home Screen Widget"
+                                        android:text="@string/feature_home_widget_title"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
                                         android:textColor="#1976D2" />
@@ -425,7 +425,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Track progress directly from your home screen"
+                                        android:text="@string/feature_home_widget_description"
                                         android:textSize="14sp"
                                         android:textColor="#546E7A"
                                         android:layout_marginTop="4dp" />
@@ -444,7 +444,7 @@
                 android:id="@+id/btn_get_started"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Get Started"
+                android:text="@string/get_started_button"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:background="@drawable/button_primary"

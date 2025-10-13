@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="Help and Support Page"
+            app:title="@string/help_toolbar_title"
             app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -91,7 +91,7 @@
                         android:layout_marginStart="12dp"
                         android:layout_weight="2"
                         android:background="@android:color/transparent"
-                        android:hint="Search for help..."
+                        android:hint="@string/help_search_hint"
                         android:inputType="text"
                         android:textColor="#1976D2"
                         android:textColorHint="#546E7A"
@@ -106,7 +106,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Frequently Asked Questions"
+                android:text="@string/help_faq_section_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2"
@@ -141,7 +141,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="How do I set up hydration reminders?"
+                            android:text="@string/faq_question_1"
                             android:textSize="16sp"
                             android:textColor="#1976D2" />
 
@@ -150,7 +150,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_expand_more"
-                            android:contentDescription="Expand"
+                            android:contentDescription="@string/expand_description"
                             app:tint="#1976D2" />
 
                     </LinearLayout>
@@ -168,7 +168,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="To set up hydration reminders, go to Settings > Notifications > Hydration Reminders. You can set the frequency and timing of reminders to suit your schedule."
+                            android:text="@string/faq_answer_1"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:lineSpacingMultiplier="1.2" />
@@ -207,7 +207,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="How do I track my mood?"
+                            android:text="@string/faq_question_2"
                             android:textSize="16sp"
                             android:textColor="#1976D2" />
 
@@ -216,7 +216,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_expand_more"
-                            android:contentDescription="Expand"
+                            android:contentDescription="@string/expand_description"
                             app:tint="#1976D2" />
 
                     </LinearLayout>
@@ -234,7 +234,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Navigate to the Mood Journal from the home screen. Select an emoji that represents your current mood and optionally add a note. Your mood entries will be saved in your mood history."
+                            android:text="@string/faq_answer_2"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:lineSpacingMultiplier="1.2" />
@@ -273,7 +273,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="How do I change my wellness goals?"
+                            android:text="@string/faq_question_3"
                             android:textSize="16sp"
                             android:textColor="#1976D2" />
 
@@ -282,7 +282,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_expand_more"
-                            android:contentDescription="Expand"
+                            android:contentDescription="@string/expand_description"
                             app:tint="#1976D2" />
 
                     </LinearLayout>
@@ -300,7 +300,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Go to your Profile page and tap on the Wellness Goals card. You can edit or change your goals at any time to better suit your wellness journey."
+                            android:text="@string/faq_answer_3"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:lineSpacingMultiplier="1.2" />
@@ -315,7 +315,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contact Support"
+                android:text="@string/help_contact_section_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2"
@@ -359,7 +359,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Email Support"
+                            android:text="@string/support_email_title"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -367,7 +367,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="support@wellnesstracker.com"
+                            android:text="@string/support_email_address"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
@@ -378,7 +378,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:contentDescription="Navigate"
+                        android:contentDescription="@string/navigate_description"
                         app:tint="#1976D2" />
 
                 </LinearLayout>
@@ -423,7 +423,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Live Chat"
+                            android:text="@string/support_chat_title"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -431,7 +431,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Chat with our support team"
+                            android:text="@string/support_chat_description"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:layout_marginTop="2dp" />
@@ -442,7 +442,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:contentDescription="Navigate"
+                        android:contentDescription="@string/navigate_description"
                         app:tint="#1976D2" />
 
                 </LinearLayout>
@@ -453,7 +453,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="App Information"
+                android:text="@string/help_app_info_section_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2"
@@ -484,14 +484,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Version"
+                            android:text="@string/app_info_version_label"
                             android:textSize="14sp"
                             android:textColor="#546E7A" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1.0.0"
+                            android:text="@string/app_info_version_value"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -509,14 +509,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Developer"
+                            android:text="@string/app_info_developer_label"
                             android:textSize="14sp"
                             android:textColor="#546E7A" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wellness Tracker Team"
+                            android:text="@string/app_info_developer_value"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -533,14 +533,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Last Updated"
+                            android:text="@string/app_info_updated_label"
                             android:textSize="14sp"
                             android:textColor="#546E7A" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="May 15, 2023"
+                            android:text="@string/app_info_updated_value"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -558,7 +558,7 @@
                 android:layout_height="56dp"
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/button_secondary"
-                android:text="Rate Our App"
+                android:text="@string/rate_app_button"
                 android:textColor="#1976D2"
                 android:textSize="16sp"
                 android:textStyle="bold" />

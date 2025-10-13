@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Home Page"
+                android:text="@string/main_toolbar_title"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2" />
@@ -83,7 +83,7 @@
                 android:layout_height="32dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:contentDescription="Profile"
+                android:contentDescription="@string/main_profile_description"
                 android:focusable="true"
                 android:padding="4dp"
                 android:src="@drawable/ic_profile"
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="Welcome to Your\nWellness Journey"
+                        android:text="@string/main_welcome_title"
                         android:textColor="#1976D2"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         android:gravity="center"
-                        android:text="Track your habits, mood, and progress all in one place"
+                        android:text="@string/main_welcome_subtitle"
                         android:textColor="#546E7A"
                         android:textSize="16sp"
                         android:lineSpacingExtra="2dp" />
@@ -203,7 +203,7 @@
                                 android:id="@+id/tv_hydration_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Hydration Tracker"
+                                android:text="@string/card_hydration_title"
                                 android:textColor="#1976D2"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -213,7 +213,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="Track water intake with reminders"
+                                android:text="@string/card_hydration_subtitle"
                                 android:textColor="#546E7A"
                                 android:textSize="15sp" />
 
@@ -224,7 +224,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_arrow_right"
-                            android:contentDescription="Navigate to Hydration"
+                            android:contentDescription="@string/card_hydration_nav_description"
                             app:tint="#1976D2" />
 
                     </LinearLayout>
@@ -271,7 +271,7 @@
                                 android:id="@+id/tv_mood_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Mood Journal"
+                                android:text="@string/card_mood_title"
                                 android:textColor="#1976D2"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -281,7 +281,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="Record emotions with emoji selector"
+                                android:text="@string/card_mood_subtitle"
                                 android:textColor="#546E7A"
                                 android:textSize="15sp" />
 
@@ -292,7 +292,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_arrow_right"
-                            android:contentDescription="Navigate to Mood"
+                            android:contentDescription="@string/card_mood_nav_description"
                             app:tint="#1976D2" />
 
                     </LinearLayout>
@@ -339,7 +339,7 @@
                                 android:id="@+id/tv_steps_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Step Counter"
+                                android:text="@string/card_steps_title"
                                 android:textColor="#1976D2"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -349,7 +349,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="Track daily steps and activity"
+                                android:text="@string/card_steps_subtitle"
                                 android:textColor="#546E7A"
                                 android:textSize="15sp" />
 
@@ -360,7 +360,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_arrow_right"
-                            android:contentDescription="Navigate to Steps"
+                            android:contentDescription="@string/card_steps_nav_description"
                             app:tint="#1976D2" />
 
                     </LinearLayout>

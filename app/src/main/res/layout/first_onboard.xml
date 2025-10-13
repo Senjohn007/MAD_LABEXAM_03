@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="Step 1 of 3"
+                android:text="@string/progress_step_1"
                 android:textSize="14sp"
                 android:textColor="#1976D2"
                 android:layout_marginBottom="24dp" />
@@ -40,7 +40,7 @@
                 android:id="@+id/tv_welcome_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to Your Wellness Journey"
+                android:text="@string/welcome_title"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#1976D2"
@@ -52,7 +52,7 @@
                 android:id="@+id/tv_welcome_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="What's your main wellness goal?"
+                android:text="@string/welcome_subtitle"
                 android:textSize="18sp"
                 android:textColor="#546E7A"
                 android:gravity="center"
@@ -73,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_wellness_heart"
                     android:padding="24dp"
-                    android:contentDescription="Wellness Icon" />
+                    android:contentDescription="@string/wellness_icon_description" />
             </androidx.cardview.widget.CardView>
 
             <!-- Scrollable Goal Selection Cards -->
@@ -126,7 +126,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Improve Fitness"
+                                    android:text="@string/goal_fitness_title"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     android:textColor="#1976D2" />
@@ -134,7 +134,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Track workouts and build strength"
+                                    android:text="@string/goal_fitness_description"
                                     android:textSize="14sp"
                                     android:textColor="#546E7A"
                                     android:layout_marginTop="4dp" />
@@ -181,7 +181,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Stay Hydrated"
+                                    android:text="@string/goal_hydration_title"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     android:textColor="#1976D2" />
@@ -189,13 +189,12 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Track water intake with reminders"
+                                    android:text="@string/goal_hydration_description"
                                     android:textSize="14sp"
                                     android:textColor="#546E7A"
                                     android:layout_marginTop="4dp" />
 
                             </LinearLayout>
-
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -237,7 +236,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Track Mood"
+                                    android:text="@string/goal_mood_title"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     android:textColor="#1976D2" />
@@ -245,13 +244,12 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Record emotions and identify patterns"
+                                    android:text="@string/goal_mood_description"
                                     android:textSize="14sp"
                                     android:textColor="#546E7A"
                                     android:layout_marginTop="4dp" />
 
                             </LinearLayout>
-
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -293,7 +291,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Reduce Stress"
+                                    android:text="@string/goal_stress_title"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     android:textColor="#1976D2" />
@@ -301,13 +299,12 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Practice mindfulness and relaxation"
+                                    android:text="@string/goal_stress_description"
                                     android:textSize="14sp"
                                     android:textColor="#546E7A"
                                     android:layout_marginTop="4dp" />
 
                             </LinearLayout>
-
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -349,7 +346,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Better Sleep"
+                                    android:text="@string/goal_sleep_title"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     android:textColor="#1976D2" />
@@ -357,13 +354,12 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Monitor and improve sleep quality"
+                                    android:text="@string/goal_sleep_description"
                                     android:textSize="14sp"
                                     android:textColor="#546E7A"
                                     android:layout_marginTop="4dp" />
 
                             </LinearLayout>
-
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -405,7 +401,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Healthy Weight"
+                                    android:text="@string/goal_weight_title"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     android:textColor="#1976D2" />
@@ -413,7 +409,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Maintain optimal body weight"
+                                    android:text="@string/goal_weight_description"
                                     android:textSize="14sp"
                                     android:textColor="#546E7A"
                                     android:layout_marginTop="4dp" />
@@ -431,7 +427,7 @@
                 android:id="@+id/btn_continue"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Continue"
+                android:text="@string/continue_button"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:background="@drawable/button_primary"
@@ -444,7 +440,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Skip for now"
+                android:text="@string/skip_button"
                 android:textSize="14sp"
                 android:textColor="#546E7A"
                 android:padding="16dp"

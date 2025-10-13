@@ -491,7 +491,7 @@
                                 android:id="@+id/tv_mon_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="9,876"
+                                android:text="6,876"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -529,7 +529,7 @@
                                 android:id="@+id/tv_tue_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10,523"
+                                android:text="5,523"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -567,7 +567,7 @@
                                 android:id="@+id/tv_wed_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="6,234"
+                                android:text="3,234"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -605,7 +605,7 @@
                                 android:id="@+id/tv_thu_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="8,765"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -643,7 +643,7 @@
                                 android:id="@+id/tv_fri_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="9,234"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -681,7 +681,7 @@
                                 android:id="@+id/tv_sat_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="8,542"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#4CAF50"
                                 android:textStyle="bold" />
@@ -722,7 +722,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Average: 7,842 steps/day"
+                            android:text="Average: 5796 steps/day"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:gravity="center" />
@@ -732,7 +732,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Best: 10,523 steps"
+                            android:text="Best: 7,543 steps"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:gravity="center" />

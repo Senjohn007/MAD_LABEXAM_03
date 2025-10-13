@@ -1,3 +1,143 @@
 <resources>
+    <!-- App Basic Info -->
     <string name="app_name">Wellness Tracker</string>
+    <string name="tagline">Your journey to better health starts here</string>
+    <string name="loading_message">Preparing your wellness journey...</string>
+    <string name="wellness_logo_description">Wellness Tracker Logo</string>
+
+
+    <string name="progress_step_1">Step 1 of 3</string>
+    <string name="welcome_title">Welcome to Your Wellness Journey</string>
+    <string name="welcome_subtitle">What\'s your main wellness goal?</string>
+    <string name="wellness_icon_description">Wellness Icon</string>
+
+
+    <string name="progress_step_2">Step 2 of 3</string>
+    <string name="experience_title">Suitable for any level of experience !</string>
+    <string name="experience_subtitle">Help yourself by understanding your level</string>
+    <string name="experience_icon_description">Experience Level Icon</string>
+
+
+    <string name="progress_step_3">Step 3 of 3</string>
+    <string name="completion_title">You\'re All Set!</string>
+    <string name="completion_subtitle">Your personalized wellness journey is ready</string>
+    <string name="completion_icon_description">Completion Icon</string>
+
+
+    <string name="main_toolbar_title">Home Page</string>
+    <string name="main_profile_description">Profile</string>
+    <string name="main_welcome_title">Welcome to Your\nWellness Journey</string>
+    <string name="main_welcome_subtitle">Track your habits, mood, and progress all in one place</string>
+
+
+    <string name="card_hydration_title">Hydration Tracker</string>
+    <string name="card_hydration_subtitle">Track water intake with reminders</string>
+    <string name="card_hydration_nav_description">Navigate to Hydration</string>
+    <string name="card_mood_title">Mood Journal</string>
+    <string name="card_mood_subtitle">Record emotions with emoji selector</string>
+    <string name="card_mood_nav_description">Navigate to Mood</string>
+    <string name="card_steps_title">Step Counter</string>
+    <string name="card_steps_subtitle">Track daily steps and activity</string>
+    <string name="card_steps_nav_description">Navigate to Steps</string>
+
+
+    <string name="profile_toolbar_title">Profile Page</string>
+    <string name="profile_edit_profile_button">Edit Profile</string>
+    <string name="profile_user_name_example">Alex Johnson</string>
+    <string name="profile_user_email_example">alex.johnson@example.com</string>
+    <string name="profile_wellness_goals_title">Wellness Goals</string>
+    <string name="profile_edit_goals_button">Edit Goals</string>
+    <string name="profile_account_actions_title">Account Actions</string>
+    <string name="profile_settings_title">Settings</string>
+    <string name="profile_settings_description">Notifications, units, privacy</string>
+    <string name="profile_help_title">Help and Support</string>
+    <string name="profile_help_description">FAQs and contact support</string>
+    <string name="profile_logout_button">Log Out</string>
+
+
+    <string name="help_toolbar_title">Help and Support Page</string>
+    <string name="help_search_hint">Search for help...</string>
+    <string name="help_faq_section_title">Frequently Asked Questions</string>
+    <string name="help_contact_section_title">Contact Support</string>
+    <string name="help_app_info_section_title">App Information</string>
+
+
+    <string name="faq_question_1">How do I set up hydration reminders?</string>
+    <string name="faq_answer_1">To set up hydration reminders, go to Settings > Notifications > Hydration Reminders. You can set the frequency and timing of reminders to suit your schedule.</string>
+    <string name="faq_question_2">How do I track my mood?</string>
+    <string name="faq_answer_2">Navigate to the Mood Journal from the home screen. Select an emoji that represents your current mood and optionally add a note. Your mood entries will be saved in your mood history.</string>
+    <string name="faq_question_3">How do I change my wellness goals?</string>
+    <string name="faq_answer_3">Go to your Profile page and tap on the Wellness Goals card. You can edit or change your goals at any time to better suit your wellness journey.</string>
+
+
+    <string name="support_email_title">Email Support</string>
+    <string name="support_email_address">support@wellnesstracker.com</string>
+    <string name="support_chat_title">Live Chat</string>
+    <string name="support_chat_description">Chat with our support team</string>
+
+
+    <string name="app_info_version_label">Version</string>
+    <string name="app_info_version_value">1.0.0</string>
+    <string name="app_info_developer_label">Developer</string>
+    <string name="app_info_developer_value">Wellness Tracker Team</string>
+    <string name="app_info_updated_label">Last Updated</string>
+    <string name="app_info_updated_value">May 15, 2023</string>
+
+
+    <string name="level_beginner_title">Beginner</string>
+    <string name="level_beginner_description">Just starting my wellness journey</string>
+    <string name="level_intermediate_title">Intermediate</string>
+    <string name="level_intermediate_description">I have some experience with fitness</string>
+    <string name="level_advanced_title">Advanced</string>
+    <string name="level_advanced_description">I\'m an experienced fitness enthusiast</string>
+
+
+    <string name="feature_preview_title">Whatever the level you are in, we\'ll enable:</string>
+    <string name="feature_personalized_recommendations">Personalized habit recommendations</string>
+    <string name="feature_adaptive_difficulty">Adaptive difficulty levels</string>
+    <string name="feature_progress_tracking">Customized progress tracking</string>
+
+
+    <string name="summary_title">Your Wellness Plan</string>
+    <string name="summary_goal_label">Primary Goal</string>
+    <string name="summary_goal_example">Improve Fitness</string>
+    <string name="summary_experience_label">Experience Level</string>
+    <string name="summary_experience_example">Intermediate</string>
+    <string name="summary_next_steps_label">Next Steps</string>
+    <string name="summary_next_steps_text">Start with a 7-day beginner plan</string>
+
+
+    <string name="features_title">Your Wellness Tools</string>
+    <string name="feature_habit_tracker_title">Daily Habit Tracker</string>
+    <string name="feature_habit_tracker_description">Track and complete your wellness habits</string>
+    <string name="feature_mood_journal_title">Mood Journal</string>
+    <string name="feature_mood_journal_description">Log emotions with emoji selector</string>
+    <string name="feature_hydration_reminder_title">Hydration Reminder</string>
+    <string name="feature_hydration_reminder_description">Customizable water intake reminders</string>
+    <string name="feature_home_widget_title">Home Screen Widget</string>
+    <string name="feature_home_widget_description">Track progress directly from your home screen</string>
+
+
+    <string name="goal_fitness_title">Improve Fitness</string>
+    <string name="goal_fitness_description">Track workouts and build strength</string>
+    <string name="goal_hydration_title">Stay Hydrated</string>
+    <string name="goal_hydration_description">Track water intake with reminders</string>
+    <string name="goal_mood_title">Track Mood</string>
+    <string name="goal_mood_description">Record emotions and identify patterns</string>
+    <string name="goal_stress_title">Reduce Stress</string>
+    <string name="goal_stress_description">Practice mindfulness and relaxation</string>
+    <string name="goal_sleep_title">Better Sleep</string>
+    <string name="goal_sleep_description">Monitor and improve sleep quality</string>
+    <string name="goal_weight_title">Healthy Weight</string>
+    <string name="goal_weight_description">Maintain optimal body weight</string>
+
+
+    <string name="continue_button">Continue</string>
+    <string name="skip_button">Skip for now</string>
+    <string name="get_started_button">Get Started</string>
+    <string name="rate_app_button">Rate Our App</string>
+
+
+    <string name="expand_description">Expand</string>
+    <string name="navigate_description">Navigate</string>
 </resources>
