@@ -4,55 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_gradient_background">
+    android:background="@drawable/splash_gradient_background"
+    android:fitsSystemWindows="true"
+    tools:context=".StepsActivity">
 
     <!-- Decorative Elements -->
     <View
+        android:id="@+id/decorative_top"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/circle_decorative"
         android:layout_marginTop="-60dp"
         android:layout_marginStart="-60dp"
+        android:alpha="0.1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:alpha="0.1" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
+        android:id="@+id/decorative_bottom"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/circle_decorative"
         android:layout_marginBottom="-40dp"
         android:layout_marginEnd="-40dp"
+        android:alpha="0.1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:alpha="0.1" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Status Bar Spacer -->
+    <View
+        android:id="@+id/status_bar_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         app:elevation="2dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/status_bar_spacer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="Step Counter Page"
+            app:title="Step Counter"
             app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Main Content -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <!-- Main Content - Updated Constraint -->
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,6 +97,7 @@
 
             <!-- Today's Steps Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/todays_steps_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -75,8 +111,8 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <!-- Title -->
                     <TextView
+                        android:id="@+id/tv_todays_steps_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Today's Steps"
@@ -96,6 +132,7 @@
 
                         <!-- Step Icon -->
                         <TextView
+                            android:id="@+id/tv_step_icon"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:text="👟"
@@ -115,7 +152,7 @@
                                 android:id="@+id/tv_step_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="8,542"
+                                android:text="0"
                                 android:textSize="32sp"
                                 android:textStyle="bold"
                                 android:textColor="#1976D2" />
@@ -138,8 +175,9 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
-                        android:progress="85"
+                        android:progress="0"
                         android:progressDrawable="@drawable/progress_steps"
+                        android:layout_marginBottom="8dp"
                         tools:progress="85" />
 
                     <!-- Percentage -->
@@ -147,11 +185,10 @@
                         android:id="@+id/tv_step_percentage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="85% of daily goal"
+                        android:text="0% of daily goal"
                         android:textSize="14sp"
                         android:textColor="#4CAF50"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp" />
+                        android:layout_gravity="center" />
 
                 </LinearLayout>
 
@@ -163,6 +200,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="#FFF3E0">
@@ -173,7 +213,6 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <!-- Title -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -234,11 +273,10 @@
                         android:id="@+id/tv_goal_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,458 steps to go!"
+                        android:text="10,000 steps to go!"
                         android:textSize="14sp"
                         android:textColor="#FF9800"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp" />
+                        android:layout_gravity="center" />
 
                 </LinearLayout>
 
@@ -246,6 +284,7 @@
 
             <!-- Activity Summary Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/activity_summary_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -287,7 +326,7 @@
                             android:id="@+id/tv_distance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="6.2 km"
+                            android:text="0.0 km"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -313,7 +352,7 @@
                             android:id="@+id/tv_calories"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="342 cal"
+                            android:text="0 cal"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -338,7 +377,7 @@
                             android:id="@+id/tv_active_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1h 24m"
+                            android:text="0h 0m"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#1976D2" />
@@ -351,6 +390,7 @@
 
             <!-- Manual Entry Section -->
             <TextView
+                android:id="@+id/tv_manual_entry_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Steps Manually"
@@ -361,6 +401,7 @@
 
             <!-- Manual Entry Layout -->
             <LinearLayout
+                android:id="@+id/ll_manual_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -378,7 +419,8 @@
                     android:padding="16dp"
                     android:textColor="#1976D2"
                     android:textColorHint="#546E7A"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:maxLength="6" />
 
                 <Button
                     android:id="@+id/btn_add_steps"
@@ -387,12 +429,14 @@
                     android:text="Add"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/button_primary" />
+                    android:background="@drawable/button_primary"
+                    android:enabled="false" />
 
             </LinearLayout>
 
             <!-- Step History Section -->
             <TextView
+                android:id="@+id/tv_step_history_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step History"
@@ -407,10 +451,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_step_history" />
 
             <!-- Weekly Chart Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/weekly_chart_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -453,7 +499,7 @@
                                 android:id="@+id/tv_sun_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="7,543"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -466,7 +512,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="75"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -491,7 +537,7 @@
                                 android:id="@+id/tv_mon_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="6,876"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -504,7 +550,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="98"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -529,7 +575,7 @@
                                 android:id="@+id/tv_tue_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="5,523"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -542,7 +588,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="100"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -567,7 +613,7 @@
                                 android:id="@+id/tv_wed_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="3,234"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="#1976D2"
                                 android:textStyle="bold" />
@@ -580,7 +626,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="62"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -607,7 +653,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textSize="10sp"
-                                android:textColor="#1976D2"
+                                android:textColor="#4CAF50"
                                 android:textStyle="bold" />
 
                             <ProgressBar
@@ -618,7 +664,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="87"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -627,7 +673,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="Thu"
                                 android:textSize="10sp"
-                                android:textColor="#546E7A" />
+                                android:textColor="#4CAF50"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -656,7 +703,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="92"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -683,7 +730,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textSize="10sp"
-                                android:textColor="#4CAF50"
+                                android:textColor="#1976D2"
                                 android:textStyle="bold" />
 
                             <ProgressBar
@@ -694,7 +741,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:max="100"
-                                android:progress="85"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_vertical"
                                 android:rotation="270" />
 
@@ -703,8 +750,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Sat"
                                 android:textSize="10sp"
-                                android:textColor="#4CAF50"
-                                android:textStyle="bold" />
+                                android:textColor="#546E7A" />
 
                         </LinearLayout>
 
@@ -722,7 +768,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Average: 5796 steps/day"
+                            android:text="Average: 0 steps/day"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:gravity="center" />
@@ -732,7 +778,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Best: 7,543 steps"
+                            android:text="Best: 0 steps"
                             android:textSize="14sp"
                             android:textColor="#546E7A"
                             android:gravity="center" />

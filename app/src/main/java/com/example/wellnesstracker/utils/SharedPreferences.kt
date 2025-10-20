@@ -3,7 +3,11 @@ package com.example.wellnesstracker.utils
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.example.wellnesstracker.models.Habit
+import com.example.wellnesstracker.models.HabitCompletion // Added missing import
 import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  *  Simple, thread-safe SharedPreferences wrapper.
@@ -165,6 +169,63 @@ object Prefs {
         val remaining = getDailyGoal() - getTodaySteps()
         return if (remaining > 0) remaining else 0
     }
+
+    /* ------------------------------------------------------------------ *
+     *  Habit Tracker specific helpers                                    *
+     * ------------------------------------------------------------------ */
+
+    private const val PREF_HABITS = "habits"
+    private const val PREF_HABIT_COMPLETIONS = "habit_completions"
+
+    // Save habits list
+    fun saveHabits(habits: List<Habit>) = putObj(PREF_HABITS, habits)
+
+    // Get habits list
+    fun getHabits(): MutableList<Habit> {
+        val type = object : TypeToken<MutableList<Habit>>() {}.type
+        return getObj(PREF_HABITS, mutableListOf(), type)
+    }
+
+    // Save habit completions
+    fun saveHabitCompletions(completions: List<HabitCompletion>) = putObj(PREF_HABIT_COMPLETIONS, completions)
+
+    // Get habit completions
+    fun getHabitCompletions(): MutableList<HabitCompletion> {
+        val type = object : TypeToken<MutableList<HabitCompletion>>() {}.type
+        return getObj(PREF_HABIT_COMPLETIONS, mutableListOf(), type)
+    }
+
+    // Get today's date string
+    fun getTodayDateString(): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return formatter.format(Date())
+    }
+
+    // Check if habit is completed today
+    fun isHabitCompletedToday(habitId: String): Boolean {
+        val completions = getHabitCompletions()
+        val today = getTodayDateString()
+        return completions.any { it.habitId == habitId && it.date == today && it.isCompleted }
+    }
+
+    // Toggle habit completion for today
+    fun toggleHabitCompletion(habitId: String) {
+        val completions = getHabitCompletions().toMutableList()
+        val today = getTodayDateString()
+
+        val existingCompletion = completions.find {
+            it.habitId == habitId && it.date == today
+        }
+
+        if (existingCompletion != null) {
+            completions.remove(existingCompletion)
+            completions.add(existingCompletion.copy(isCompleted = !existingCompletion.isCompleted))
+        } else {
+            completions.add(HabitCompletion(habitId, today, true))
+        }
+
+        saveHabitCompletions(completions)
+    }
 }
 
 // Backward compatibility class - renamed to avoid conflict with Android's SharedPreferences
@@ -201,6 +262,14 @@ class WellnessPreferences(context: Context) {
     fun getWeeklyBest(): Int = Prefs.getWeeklyBest()
     fun isDailyGoalAchieved(): Boolean = Prefs.isDailyGoalAchieved()
     fun getRemainingStepsForGoal(): Int = Prefs.getRemainingStepsForGoal()
+
+    // Add habit-specific methods to WellnessPreferences for compatibility
+    fun getHabits(): MutableList<Habit> = Prefs.getHabits()
+    fun saveHabits(habits: List<Habit>) = Prefs.saveHabits(habits)
+    fun getHabitCompletions(): MutableList<HabitCompletion> = Prefs.getHabitCompletions()
+    fun saveHabitCompletions(completions: List<HabitCompletion>) = Prefs.saveHabitCompletions(completions)
+    fun isHabitCompletedToday(habitId: String): Boolean = Prefs.isHabitCompletedToday(habitId)
+    fun toggleHabitCompletion(habitId: String) = Prefs.toggleHabitCompletion(habitId)
 }
 
 // For backward compatibility, create a typealias

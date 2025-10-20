@@ -14,6 +14,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -30,12 +31,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellnesstracker.services.StepCounterService
 import com.example.wellnesstracker.utils.SharedPreferences
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class StepsActivity : AppCompatActivity() {
 
     private val TAG = "StepsActivity"
+
+    // Companion object for constants
+    private companion object {
+        const val ACTIVITY_RECOGNITION_REQUEST_CODE = 100
+        const val DEFAULT_DAILY_GOAL = 10000
+        const val MAX_MANUAL_STEPS = 50000
+        const val MAX_GOAL_STEPS = 100000
+        const val STEP_TO_KM_RATIO = 0.000762
+        const val STEP_TO_CALORIE_RATIO = 0.04
+        const val STEPS_PER_MINUTE = 100
+    }
 
     // UI Components
     private lateinit var toolbar: Toolbar
@@ -49,11 +63,13 @@ class StepsActivity : AppCompatActivity() {
     private lateinit var etManualSteps: EditText
     private lateinit var btnAddSteps: Button
     private lateinit var rvStepHistory: RecyclerView
+    private lateinit var tvStepHistoryTitle: TextView
+    private lateinit var tvWeeklyAverage: TextView
+    private lateinit var tvWeeklyBest: TextView
     private lateinit var btnSetGoal: Button
-
-    // Daily Goal UI Components
     private lateinit var tvDailyGoalCount: TextView
     private lateinit var tvGoalStatus: TextView
+    private lateinit var bottomNavigation: BottomNavigationView
 
     // Weekly Chart UI Components
     private lateinit var tvSunCount: TextView
@@ -70,46 +86,52 @@ class StepsActivity : AppCompatActivity() {
     private lateinit var progressThu: ProgressBar
     private lateinit var progressFri: ProgressBar
     private lateinit var progressSat: ProgressBar
-    private lateinit var tvWeeklyAverage: TextView
-    private lateinit var tvWeeklyBest: TextView
 
     // Data variables
-    private var currentSteps = 8542
-    private var dailyGoal = 10000
+    private var currentSteps = 0
+    private var dailyGoal = DEFAULT_DAILY_GOAL
     private val stepHistory = mutableListOf<StepEntry>()
+    private val weeklySteps = IntArray(7) // Sun=0, Mon=1, ..., Sat=6
+
+    // Adapter
     private lateinit var stepHistoryAdapter: StepHistoryAdapter
 
-    // Weekly step data (Sun=0, Mon=1, ..., Sat=6)
-    private val weeklySteps = intArrayOf(7543, 9876, 10523, 6234, 8765, 9234, 8542) // Current week
-
     // Service-related variables
-    companion object {
-        private const val ACTIVITY_RECOGNITION_REQUEST_CODE = 100
-    }
-
     private var stepCounterService: StepCounterService? = null
     private var isServiceBound = false
+
+    // Coroutines
+    private val activityScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+    // SharedPreferences manager
+    private lateinit var sharedPrefs: SharedPreferences
 
     // Service connection
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as StepCounterService.StepCounterBinder
-            stepCounterService = binder.getService()
-            isServiceBound = true
+            try {
+                val binder = service as StepCounterService.StepCounterBinder
+                stepCounterService = binder.getService()
+                isServiceBound = true
 
-            // Set up callback for real-time updates
-            stepCounterService?.onStepCountChanged = { steps ->
-                runOnUiThread {
-                    currentSteps = steps
-                    updateUI()
+                // Set up callback for real-time updates
+                stepCounterService?.onStepCountChanged = { steps ->
+                    runOnUiThread {
+                        updateSteps(steps)
+                    }
                 }
+
+                // Get current steps from service
+                val serviceSteps = stepCounterService?.getCurrentSteps() ?: 0
+                if (serviceSteps > currentSteps) {
+                    updateSteps(serviceSteps)
+                }
+
+                Log.d(TAG, "Service connected. Current steps: $currentSteps")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in service connection", e)
+                showToast("Error connecting to step counter service")
             }
-
-            // Get current steps from service
-            currentSteps = stepCounterService?.getCurrentSteps() ?: currentSteps
-            updateUI()
-
-            Log.d(TAG, "Service connected. Current steps: $currentSteps")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -124,18 +146,19 @@ class StepsActivity : AppCompatActivity() {
 
         try {
             Log.d(TAG, "StepsActivity onCreate started")
-
-            // Set the content view to use steps_page.xml
             setContentView(R.layout.steps_page)
 
+            initializeComponents()
             initializeViews()
             setupToolbar()
+            setupBottomNavigation()
             setupClickListeners()
             setupRecyclerView()
-            loadSampleData()
-            updateUI()
 
-            // Start automatic step counting
+            // Load data asynchronously
+            loadDataAsync()
+
+            // Start step counting service
             checkAndRequestPermissions()
 
             Log.d(TAG, "StepsActivity onCreate completed successfully")
@@ -146,22 +169,13 @@ class StepsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (isServiceBound) {
-            try {
-                unbindService(serviceConnection)
-                isServiceBound = false
-                Log.d(TAG, "Service unbound successfully")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error unbinding service", e)
-            }
-        }
+    private fun initializeComponents() {
+        sharedPrefs = SharedPreferences(this)
     }
 
     private fun initializeViews() {
         try {
-            // Initialize all views
+            // Main UI components
             toolbar = findViewById(R.id.toolbar)
             tvStepCount = findViewById(R.id.tv_step_count)
             tvStepGoal = findViewById(R.id.tv_step_goal)
@@ -173,13 +187,15 @@ class StepsActivity : AppCompatActivity() {
             etManualSteps = findViewById(R.id.et_manual_steps)
             btnAddSteps = findViewById(R.id.btn_add_steps)
             rvStepHistory = findViewById(R.id.rv_step_history)
+            tvStepHistoryTitle = findViewById(R.id.tv_step_history_title)
+            tvWeeklyAverage = findViewById(R.id.tv_weekly_average)
+            tvWeeklyBest = findViewById(R.id.tv_weekly_best)
             btnSetGoal = findViewById(R.id.btn_set_goal)
-
-            // Daily Goal UI Components
             tvDailyGoalCount = findViewById(R.id.tv_daily_goal_count)
             tvGoalStatus = findViewById(R.id.tv_goal_status)
+            bottomNavigation = findViewById(R.id.bottom_navigation)
 
-            // Weekly Chart UI Components
+            // Weekly Chart Components
             tvSunCount = findViewById(R.id.tv_sun_count)
             tvMonCount = findViewById(R.id.tv_mon_count)
             tvTueCount = findViewById(R.id.tv_tue_count)
@@ -196,9 +212,10 @@ class StepsActivity : AppCompatActivity() {
             progressFri = findViewById(R.id.progress_fri)
             progressSat = findViewById(R.id.progress_sat)
 
-            tvWeeklyAverage = findViewById(R.id.tv_weekly_average)
-            tvWeeklyBest = findViewById(R.id.tv_weekly_best)
+            // Initially disable add button
+            btnAddSteps.isEnabled = false
 
+            Log.d(TAG, "Views initialized successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing views", e)
             throw e
@@ -208,32 +225,79 @@ class StepsActivity : AppCompatActivity() {
     private fun setupToolbar() {
         try {
             setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayShowHomeEnabled(true)
-
-            // Handle back button click
-            toolbar.setNavigationOnClickListener {
-                finish()
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setDisplayShowHomeEnabled(true)
+                title = "Step Counter"
             }
-
         } catch (e: Exception) {
             Log.e(TAG, "Error setting up toolbar", e)
         }
     }
 
-    private fun setupClickListeners() {
+    private fun setupBottomNavigation() {
         try {
-            // Add steps button
-            btnAddSteps.setOnClickListener {
-                addManualSteps()
+            bottomNavigation.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.nav_home -> {
+                        navigateToActivity(MainActivity::class.java)
+                        true
+                    }
+                    R.id.nav_steps -> {
+                        // Already in steps activity
+                        true
+                    }
+                    R.id.nav_hydration -> {
+                        navigateToActivity(HydrationActivity::class.java)
+                        true
+                    }
+                    R.id.nav_mood -> {
+                        navigateToActivity(MoodActivity::class.java)
+                        true
+                    }
+                    R.id.nav_habits -> {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("navigate_to", "habits")
+                        startActivity(intent)
+                        finish()
+                        true
+                    }
+                    else -> false
+                }
             }
 
-            // Set goal button
+            // Set steps as selected
+            bottomNavigation.selectedItemId = R.id.nav_steps
+
+            Log.d(TAG, "Bottom navigation setup completed")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up bottom navigation", e)
+        }
+    }
+
+    private fun navigateToActivity(activityClass: Class<*>) {
+        try {
+            val intent = Intent(this, activityClass)
+            startActivity(intent)
+            finish()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error navigating to activity: ${activityClass.simpleName}", e)
+            showToast("Navigation error")
+        }
+    }
+
+    private fun setupClickListeners() {
+        try {
+            btnAddSteps.setOnClickListener {
+                if (btnAddSteps.isEnabled) {
+                    addManualSteps()
+                }
+            }
+
             btnSetGoal.setOnClickListener {
                 showSetGoalDialog()
             }
 
-            // Manual steps input listener
             etManualSteps.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -242,6 +306,7 @@ class StepsActivity : AppCompatActivity() {
                 }
             })
 
+            Log.d(TAG, "Click listeners setup completed")
         } catch (e: Exception) {
             Log.e(TAG, "Error setting up click listeners", e)
         }
@@ -249,22 +314,95 @@ class StepsActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         try {
+            // Step history RecyclerView
             stepHistoryAdapter = StepHistoryAdapter(stepHistory)
-            rvStepHistory.layoutManager = LinearLayoutManager(this)
-            rvStepHistory.adapter = stepHistoryAdapter
+            rvStepHistory.apply {
+                layoutManager = LinearLayoutManager(this@StepsActivity)
+                adapter = stepHistoryAdapter
+                setHasFixedSize(true)
+                isNestedScrollingEnabled = false
+            }
 
+            Log.d(TAG, "RecyclerView setup completed")
         } catch (e: Exception) {
             Log.e(TAG, "Error setting up RecyclerView", e)
         }
     }
 
-    // Permission handling methods
+    private fun loadDataAsync() {
+        activityScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    loadSavedData()
+                }
+
+                // Update UI on main thread
+                updateUI()
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading data", e)
+                showToast("Error loading step data")
+            }
+        }
+    }
+
+    private suspend fun loadSavedData() {
+        try {
+            // Load daily goal
+            dailyGoal = sharedPrefs.getDailyGoal().takeIf { it > 0 } ?: DEFAULT_DAILY_GOAL
+
+            // Load current steps if service not connected
+            if (!isServiceBound) {
+                currentSteps = sharedPrefs.getTodaySteps()
+            }
+
+            // Load weekly data
+            val weeklyData = sharedPrefs.getAllWeeklySteps()
+            for (i in weeklyData.indices) {
+                if (i < weeklySteps.size) {
+                    weeklySteps[i] = weeklyData[i]
+                }
+            }
+
+            // Update current day
+            val calendar = Calendar.getInstance()
+            val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
+            if (currentDayOfWeek in 0 until weeklySteps.size) {
+                weeklySteps[currentDayOfWeek] = currentSteps
+            }
+
+            // Load step history (sample data if empty)
+            if (stepHistory.isEmpty()) {
+                loadSampleStepHistory()
+            }
+
+            Log.d(TAG, "Data loaded - Steps: $currentSteps, Goal: $dailyGoal")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading saved data", e)
+        }
+    }
+
+    private fun loadSampleStepHistory() {
+        val calendar = Calendar.getInstance()
+
+        // Today's total
+        stepHistory.add(StepEntry(currentSteps, "Today's Total", calendar.timeInMillis))
+
+        // Sample entries
+        calendar.add(Calendar.HOUR_OF_DAY, -2)
+        stepHistory.add(StepEntry(1500, "Manual Entry", calendar.timeInMillis))
+
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        stepHistory.add(StepEntry(8765, "Daily Total", calendar.timeInMillis))
+
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        stepHistory.add(StepEntry(9234, "Daily Total", calendar.timeInMillis))
+    }
+
     private fun checkAndRequestPermissions() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACTIVITY_RECOGNITION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
+            != PackageManager.PERMISSION_GRANTED) {
+
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
@@ -292,76 +430,61 @@ class StepsActivity : AppCompatActivity() {
         }
     }
 
-    // Start the step counting service - FIXED for API compatibility
     private fun startStepCountingService() {
         try {
             val serviceIntent = Intent(this, StepCounterService::class.java)
 
-            // Check Android version and use appropriate method
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // Android 8.0+ (API 26+) - Use startForegroundService
                 startForegroundService(serviceIntent)
             } else {
-                // Android 7.1 and below (API < 26) - Use startService
                 startService(serviceIntent)
             }
 
-            // Bind to service for communication
             bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
             Log.d(TAG, "Step counting service started and bound")
 
         } catch (e: Exception) {
             Log.e(TAG, "Error starting step counting service", e)
-            showToast("Error starting step counter: ${e.message}")
+            showToast("Error starting step counter")
         }
     }
 
     private fun showSetGoalDialog() {
         try {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Set Daily Goal")
-            builder.setMessage("Enter your daily step goal:")
+            val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_set_goal, null)
+            val etGoal = dialogView.findViewById<EditText>(R.id.et_goal)
 
-            // Set up the input
-            val input = EditText(this)
-            input.inputType = android.text.InputType.TYPE_CLASS_NUMBER
-            input.setText(dailyGoal.toString())
-            input.selectAll()
-            builder.setView(input)
+            etGoal.setText(dailyGoal.toString())
+            etGoal.selectAll()
 
-            // Set up the buttons
-            builder.setPositiveButton("OK") { dialog, _ ->
-                val goalText = input.text.toString().trim()
-                if (goalText.isNotEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle("Set Daily Step Goal")
+                .setMessage("Enter your daily step goal (1-${MAX_GOAL_STEPS} steps)")
+                .setView(dialogView)
+                .setPositiveButton("Set Goal") { _, _ ->
+                    val goalText = etGoal.text.toString().trim()
                     val newGoal = goalText.toIntOrNull()
-                    if (newGoal != null && newGoal > 0 && newGoal <= 100000) {
-                        dailyGoal = newGoal
 
-                        // Save to SharedPreferences
-                        try {
-                            val sharedPrefs = SharedPreferences(this)
-                            sharedPrefs.setDailyGoal(dailyGoal)
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error saving daily goal to SharedPreferences", e)
+                    when {
+                        goalText.isEmpty() -> showToast("Please enter a goal")
+                        newGoal == null || newGoal <= 0 -> showToast("Please enter a valid goal")
+                        newGoal > MAX_GOAL_STEPS -> showToast("Goal too large (max $MAX_GOAL_STEPS)")
+                        else -> {
+                            dailyGoal = newGoal
+                            activityScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    sharedPrefs.setDailyGoal(dailyGoal)
+                                }
+                                updateUI()
+                            }
+                            showToast("Daily goal set to ${formatNumber(dailyGoal)} steps!")
+                            Log.d(TAG, "Daily goal updated to: $dailyGoal")
                         }
-
-                        updateUI()
-                        showToast("Daily goal set to $dailyGoal steps!")
-                        Log.d(TAG, "Daily goal updated to: $dailyGoal")
-                    } else {
-                        showToast("Please enter a valid goal between 1 and 100,000")
                     }
-                } else {
-                    showToast("Please enter a goal")
                 }
-                dialog.dismiss()
-            }
-
-            builder.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-            }
-
-            builder.show()
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show()
 
         } catch (e: Exception) {
             Log.e(TAG, "Error showing set goal dialog", e)
@@ -378,48 +501,45 @@ class StepsActivity : AppCompatActivity() {
             }
 
             val manualSteps = manualStepsText.toIntOrNull()
-            if (manualSteps == null || manualSteps <= 0) {
-                showToast("Please enter a valid number of steps")
-                return
+            when {
+                manualSteps == null || manualSteps <= 0 -> {
+                    showToast("Please enter a valid number of steps")
+                    etManualSteps.error = "Invalid number"
+                    return
+                }
+                manualSteps > MAX_MANUAL_STEPS -> {
+                    showToast("Steps count too high (max $MAX_MANUAL_STEPS)")
+                    etManualSteps.error = "Too high"
+                    return
+                }
             }
 
-            if (manualSteps > 50000) {
-                showToast("Steps count seems too high. Please enter a reasonable number.")
-                return
-            }
-
-            // Add to service if bound, otherwise add locally
+            // Add steps to service or locally
             if (isServiceBound && stepCounterService != null) {
                 stepCounterService?.addManualSteps(manualSteps)
             } else {
-                currentSteps += manualSteps
-                // Update today's steps in weekly data
-                val calendar = Calendar.getInstance()
-                val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
-                if (currentDayOfWeek >= 0 && currentDayOfWeek < weeklySteps.size) {
-                    weeklySteps[currentDayOfWeek] = currentSteps
-                }
-
-                // Save to SharedPreferences
-                try {
-                    val sharedPrefs = SharedPreferences(this)
-                    sharedPrefs.setTodaySteps(currentSteps)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error saving steps to SharedPreferences", e)
-                }
+                updateSteps(currentSteps + manualSteps)
             }
 
             // Add to history
             val currentTime = System.currentTimeMillis()
             stepHistory.add(0, StepEntry(manualSteps, "Manual Entry", currentTime))
 
+            // Save data
+            activityScope.launch {
+                withContext(Dispatchers.IO) {
+                    sharedPrefs.setTodaySteps(currentSteps)
+                }
+            }
+
             // Update UI
             updateUI()
 
             // Clear input
             etManualSteps.text.clear()
+            etManualSteps.error = null
 
-            showToast("Added $manualSteps steps!")
+            showToast("Added ${formatNumber(manualSteps)} steps!")
             Log.d(TAG, "Added $manualSteps steps manually")
 
         } catch (e: Exception) {
@@ -428,68 +548,28 @@ class StepsActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateAddButtonState() {
-        try {
-            // Enable add button only if input is not empty
-            btnAddSteps.isEnabled = !etManualSteps.text.toString().trim().isEmpty()
+    private fun updateSteps(newSteps: Int) {
+        if (newSteps != currentSteps) {
+            currentSteps = newSteps
 
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating add button state", e)
+            // Update current day in weekly data
+            val calendar = Calendar.getInstance()
+            val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
+            if (currentDayOfWeek in 0 until weeklySteps.size) {
+                weeklySteps[currentDayOfWeek] = currentSteps
+            }
+
+            updateUI()
         }
     }
 
-    private fun loadSampleData() {
+    private fun updateAddButtonState() {
         try {
-            // Try to load from SharedPreferences if available
-            try {
-                val sharedPrefs = SharedPreferences(this)
-
-                // Load daily goal
-                dailyGoal = sharedPrefs.getDailyGoal()
-
-                // Load current steps if service is not connected yet
-                if (!isServiceBound) {
-                    val savedSteps = sharedPrefs.getTodaySteps()
-                    if (savedSteps > 0) {
-                        currentSteps = savedSteps
-                    }
-                }
-
-                // Load weekly data
-                val weeklyData = sharedPrefs.getAllWeeklySteps()
-                for (i in weeklyData.indices) {
-                    if (i < weeklySteps.size && weeklyData[i] > 0) {
-                        weeklySteps[i] = weeklyData[i]
-                    }
-                }
-
-                Log.d(TAG, "Loaded data from SharedPreferences - Steps: $currentSteps, Goal: $dailyGoal")
-            } catch (e: Exception) {
-                Log.w(TAG, "Could not load from SharedPreferences, using sample data", e)
-            }
-
-            // Add sample step entries if history is empty
-            if (stepHistory.isEmpty()) {
-                val calendar = Calendar.getInstance()
-
-                // Today - current steps
-                stepHistory.add(StepEntry(currentSteps, "Today's Total", calendar.timeInMillis))
-
-                // Earlier entries for demo
-                calendar.add(Calendar.HOUR_OF_DAY, -2)
-                stepHistory.add(StepEntry(2000, "Manual Entry", calendar.timeInMillis))
-
-                // Yesterday
-                calendar.add(Calendar.DAY_OF_YEAR, -1)
-                stepHistory.add(StepEntry(9876, "Daily Total", calendar.timeInMillis))
-
-                // Day before yesterday
-                calendar.add(Calendar.DAY_OF_YEAR, -1)
-                stepHistory.add(StepEntry(7543, "Daily Total", calendar.timeInMillis))
-            }
-
+            val text = etManualSteps.text.toString().trim()
+            val steps = text.toIntOrNull()
+            btnAddSteps.isEnabled = steps != null && steps > 0 && steps <= MAX_MANUAL_STEPS
         } catch (e: Exception) {
-            Log.e(TAG, "Error loading sample data", e)
+            Log.e(TAG, "Error updating add button state", e)
         }
     }
 
@@ -502,37 +582,28 @@ class StepsActivity : AppCompatActivity() {
             // Calculate and update percentage
             val percentage = if (dailyGoal > 0) {
                 ((currentSteps.toDouble() / dailyGoal.toDouble()) * 100).toInt()
-            } else {
-                0
-            }
-            tvStepPercentage.text = "$percentage% of daily goal"
+            } else 0
 
-            // Update progress bar
+            tvStepPercentage.text = "$percentage% of daily goal"
             progressSteps.progress = percentage.coerceAtMost(100)
 
             // Update daily goal card
             tvDailyGoalCount.text = formatNumber(dailyGoal)
             updateGoalStatus()
 
-            // Calculate and update activity summary
-            val distance = String.format("%.1f", currentSteps * 0.000762) // Rough calculation: 1 step ≈ 0.762 meters
-            tvDistance.text = "$distance km"
-
-            val calories = (currentSteps * 0.04).toInt() // Rough calculation: 1 step ≈ 0.04 calories
-            tvCalories.text = "$calories cal"
-
-            val activeMinutes = (currentSteps / 100) // Rough calculation: 100 steps per minute
-            val hours = activeMinutes / 60
-            val minutes = activeMinutes % 60
-            tvActiveTime.text = "${hours}h ${minutes}m"
+            // Update activity summary
+            updateActivitySummary()
 
             // Update weekly chart
             updateWeeklyChart()
 
-            // Update RecyclerView
+            // Update history
             stepHistoryAdapter.notifyDataSetChanged()
 
-            Log.d(TAG, "UI updated - Steps: $currentSteps, Goal: $dailyGoal, Percentage: $percentage%")
+            // Update visibility
+            tvStepHistoryTitle.visibility = if (stepHistory.isNotEmpty()) View.VISIBLE else View.GONE
+
+            Log.d(TAG, "UI updated - Steps: $currentSteps, Percentage: $percentage%")
 
         } catch (e: Exception) {
             Log.e(TAG, "Error updating UI", e)
@@ -544,46 +615,39 @@ class StepsActivity : AppCompatActivity() {
             val remaining = dailyGoal - currentSteps
             if (remaining <= 0) {
                 tvGoalStatus.text = "🎉 Goal achieved! Great job!"
-                tvGoalStatus.setTextColor(resources.getColor(android.R.color.holo_green_dark))
+                tvGoalStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
             } else {
                 tvGoalStatus.text = "${formatNumber(remaining)} steps to go!"
-                tvGoalStatus.setTextColor(resources.getColor(android.R.color.holo_orange_dark))
+                tvGoalStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_dark))
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error updating goal status", e)
         }
     }
 
+    private fun updateActivitySummary() {
+        try {
+            // Distance calculation
+            val distanceKm = currentSteps * STEP_TO_KM_RATIO
+            tvDistance.text = String.format("%.1f km", distanceKm)
+
+            // Calories calculation
+            val calories = (currentSteps * STEP_TO_CALORIE_RATIO).toInt()
+            tvCalories.text = "$calories cal"
+
+            // Active time calculation
+            val activeMinutes = currentSteps / STEPS_PER_MINUTE
+            val hours = activeMinutes / 60
+            val minutes = activeMinutes % 60
+            tvActiveTime.text = "${hours}h ${minutes}m"
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating activity summary", e)
+        }
+    }
+
     private fun updateWeeklyChart() {
         try {
-            // Try to get fresh weekly data from SharedPreferences
-            try {
-                val sharedPrefs = SharedPreferences(this)
-                val weeklyData = sharedPrefs.getAllWeeklySteps()
-
-                // Update current day with live data
-                val calendar = Calendar.getInstance()
-                val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
-                if (currentDayOfWeek >= 0 && currentDayOfWeek < weeklySteps.size) {
-                    weeklySteps[currentDayOfWeek] = currentSteps
-                }
-
-                // Use SharedPreferences data if available, otherwise use local weeklySteps
-                for (i in weeklyData.indices) {
-                    if (i < weeklySteps.size && weeklyData[i] > 0) {
-                        weeklySteps[i] = weeklyData[i]
-                    }
-                }
-            } catch (e: Exception) {
-                Log.w(TAG, "Could not load weekly data from SharedPreferences", e)
-                // Update current day with live data using local array
-                val calendar = Calendar.getInstance()
-                val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
-                if (currentDayOfWeek >= 0 && currentDayOfWeek < weeklySteps.size) {
-                    weeklySteps[currentDayOfWeek] = currentSteps
-                }
-            }
-
             val stepCounts = arrayOf(tvSunCount, tvMonCount, tvTueCount, tvWedCount, tvThuCount, tvFriCount, tvSatCount)
             val progressBars = arrayOf(progressSun, progressMon, progressTue, progressWed, progressThu, progressFri, progressSat)
 
@@ -592,33 +656,37 @@ class StepsActivity : AppCompatActivity() {
 
             // Get current day of week (0 = Sunday, 6 = Saturday)
             val calendar = Calendar.getInstance()
-            val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1 // Convert to 0-6 format
+            val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
 
             for (i in weeklySteps.indices) {
                 val steps = weeklySteps[i]
-                stepCounts[i].text = formatNumber(steps)
+                stepCounts[i].text = when {
+                    steps >= 1000 -> String.format("%.1fK", steps / 1000.0)
+                    else -> steps.toString()
+                }
 
                 // Calculate percentage based on daily goal
                 val percentage = if (dailyGoal > 0) {
                     ((steps.toDouble() / dailyGoal.toDouble()) * 100).toInt()
-                } else {
-                    0
-                }
+                } else 0
                 progressBars[i].progress = percentage.coerceAtMost(100)
 
                 // Highlight current day
-                if (i == currentDayOfWeek) {
-                    stepCounts[i].setTextColor(resources.getColor(android.R.color.holo_green_dark))
+                val textColor = if (i == currentDayOfWeek) {
+                    ContextCompat.getColor(this, android.R.color.holo_green_dark)
                 } else {
-                    stepCounts[i].setTextColor(resources.getColor(android.R.color.holo_blue_dark))
+                    ContextCompat.getColor(this, android.R.color.holo_blue_dark)
                 }
+                stepCounts[i].setTextColor(textColor)
 
                 totalSteps += steps
                 if (steps > maxSteps) maxSteps = steps
             }
 
             // Update weekly summary
-            val averageSteps = if (totalSteps > 0) totalSteps / weeklySteps.size else 0
+            val nonZeroSteps = weeklySteps.filter { it > 0 }
+            val averageSteps = if (nonZeroSteps.isNotEmpty()) nonZeroSteps.average().toInt() else 0
+
             tvWeeklyAverage.text = "Average: ${formatNumber(averageSteps)} steps/day"
             tvWeeklyBest.text = "Best: ${formatNumber(maxSteps)} steps"
 
@@ -642,10 +710,50 @@ class StepsActivity : AppCompatActivity() {
         }
     }
 
+    // Activity lifecycle methods
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Save current data
+        activityScope.launch {
+            withContext(Dispatchers.IO) {
+                sharedPrefs.setTodaySteps(currentSteps)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Unbind service
+        if (isServiceBound) {
+            try {
+                unbindService(serviceConnection)
+                isServiceBound = false
+                Log.d(TAG, "Service unbound successfully")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error unbinding service", e)
+            }
+        }
+
+        // Cancel coroutines
+        activityScope.cancel()
+        Log.d(TAG, "StepsActivity destroyed")
+    }
+
     // Data class for step entries
     data class StepEntry(
         val steps: Int,
-        val type: String, // "Auto Detected", "Manual Entry", "Daily Total"
+        val type: String,
         val timestamp: Long
     ) {
         fun getFormattedDate(): String {
@@ -659,9 +767,10 @@ class StepsActivity : AppCompatActivity() {
         }
     }
 
-    // RecyclerView Adapter for step history
-    private class StepHistoryAdapter(private val stepList: List<StepEntry>) :
-        RecyclerView.Adapter<StepHistoryAdapter.StepViewHolder>() {
+    // Step History Adapter
+    private class StepHistoryAdapter(
+        private val stepList: MutableList<StepEntry>
+    ) : RecyclerView.Adapter<StepHistoryAdapter.StepViewHolder>() {
 
         class StepViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val tvStepNumber: TextView = itemView.findViewById(R.id.tv_step_number)
@@ -677,19 +786,31 @@ class StepsActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: StepViewHolder, position: Int) {
-            val stepEntry = stepList[position]
+            try {
+                val stepEntry = stepList[position]
 
-            holder.tvStepNumber.text = "${stepEntry.steps} steps"
-            holder.tvStepType.text = stepEntry.type
-            holder.tvStepTime.text = stepEntry.getFormattedTime()
+                holder.tvStepNumber.text = "${stepEntry.steps} steps"
+                holder.tvStepType.text = stepEntry.type
+                holder.tvStepTime.text = stepEntry.getFormattedTime()
 
-            // Set different icons based on type
-            when (stepEntry.type) {
-                "Auto Detected" -> holder.ivStepIcon.setImageResource(R.drawable.ic_auto_steps)
-                "Manual Entry" -> holder.ivStepIcon.setImageResource(R.drawable.ic_manual_steps)
-                "Daily Total" -> holder.ivStepIcon.setImageResource(R.drawable.ic_daily_steps)
-                "Today's Total" -> holder.ivStepIcon.setImageResource(R.drawable.ic_steps)
-                else -> holder.ivStepIcon.setImageResource(R.drawable.ic_steps)
+                // Set appropriate icons
+                val iconRes = when (stepEntry.type) {
+                    "Auto Detected" -> R.drawable.ic_auto_steps
+                    "Manual Entry" -> R.drawable.ic_manual_steps
+                    "Daily Total" -> R.drawable.ic_daily_steps
+                    "Today's Total" -> R.drawable.ic_steps
+                    else -> R.drawable.ic_steps
+                }
+
+                try {
+                    holder.ivStepIcon.setImageResource(iconRes)
+                } catch (e: Exception) {
+                    // Fallback to default icon if drawable doesn't exist
+                    holder.ivStepIcon.setImageResource(android.R.drawable.ic_menu_compass)
+                }
+
+            } catch (e: Exception) {
+                Log.e("StepHistoryAdapter", "Error binding view holder", e)
             }
         }
 

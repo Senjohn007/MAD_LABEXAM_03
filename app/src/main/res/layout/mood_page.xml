@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Top App Bar - Positioned Lower -->
+    <!-- Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="0dp"
@@ -58,18 +58,33 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="Mood Journal Page"
+            app:title="Mood Journal"
             app:titleTextColor="#1976D2" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Main Content -->
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <!-- Main Content - Updated Constraint -->
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -96,12 +111,11 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <!-- Title -->
                     <TextView
                         android:id="@+id/tv_mood_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="How are you feeling today?"
+                        android:text="How are you feeling right now?"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#1976D2"
@@ -305,7 +319,7 @@
                 android:textColor="#1976D2"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Mood Chart -->
+            <!-- Enhanced Mood Chart with Title -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/chart_card"
                 android:layout_width="match_parent"
@@ -315,11 +329,30 @@
                 app:cardElevation="2dp"
                 app:cardBackgroundColor="@color/white">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/line_chart"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_margin="8dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Chart Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6-Hour Mood Intervals"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#1976D2"
+                        android:padding="12dp"
+                        android:paddingBottom="4dp"
+                        android:gravity="center" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_margin="8dp" />
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -329,9 +362,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_mood_history" />
 
-            <!-- Mood Insights Card -->
+            <!-- Enhanced Mood Insights Card -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/insights_card"
                 android:layout_width="match_parent"
@@ -350,13 +384,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Weekly Mood Insights"
+                        android:text="Mood Insights"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#1976D2"
                         android:layout_marginBottom="12dp" />
 
-                    <!-- Mood Distribution -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -382,11 +415,11 @@
 
                     </LinearLayout>
 
-                    <!-- Trend Indicator -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -404,6 +437,31 @@
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#4CAF50" />
+
+                    </LinearLayout>
+
+                    <!-- NEW: Today's Activity Display -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Today's Activity:"
+                            android:textSize="14sp"
+                            android:textColor="#546E7A" />
+
+                        <TextView
+                            android:id="@+id/tv_today_intervals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Track throughout day"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1976D2" />
 
                     </LinearLayout>
 

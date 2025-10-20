@@ -13,7 +13,12 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- HABIT TRACKER PERMISSIONS (Optional but recommended) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name=".WellnessTrackerApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,109 +29,119 @@
         android:theme="@style/Theme.WellnessTracker"
         tools:targetApi="31">
 
-        <!-- SplashActivity - New launcher activity -->
+        <!-- SplashActivity - Launcher activity -->
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- FirstOnboard - Now a regular activity -->
+        <!-- Onboarding Activities -->
         <activity
             android:name=".FirstOnboard"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-        <!-- SecondOnboard - Regular activity -->
         <activity
             android:name=".SecondOnboard"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-        <!-- ThirdOnboard - Regular activity -->
         <activity
             android:name=".ThirdOnboard"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-        <!-- MainActivity - Regular activity -->
+        <!-- MainActivity - Main hub with habit tracker fragment -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop" />
 
-        <!-- HydrationActivity - Working activity -->
+        <!-- HydrationActivity -->
         <activity
             android:name=".HydrationActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- MoodActivity - Working activity -->
+        <!-- MoodActivity -->
         <activity
             android:name=".MoodActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- StepsActivity - Working activity -->
+        <!-- StepsActivity -->
         <activity
             android:name=".StepsActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- ProfileActivity - NOW ENABLED! -->
+        <!-- ProfileActivity -->
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- SupportActivity - NEW ACTIVITY -->
+        <!-- SupportActivity -->
         <activity
             android:name=".SupportActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProfileActivity" />
         </activity>
 
+        <!-- SettingsActivity -->
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProfileActivity" />
         </activity>
 
-        <!-- Existing service -->
+        <!-- Services -->
         <service
             android:name=".services.StepCounterService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="health" />
 
-        <!-- NEW: Water Reminder BroadcastReceiver -->
+        <!-- Broadcast Receivers -->
         <receiver
             android:name=".receivers.WaterReminderReceiver"
             android:enabled="true"
             android:exported="false" />
 
-        <!-- NEW: Boot Receiver to reschedule alarms after device restart -->
         <receiver
             android:name=".receivers.BootReceiver"
             android:enabled="true"

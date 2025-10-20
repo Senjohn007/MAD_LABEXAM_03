@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Status Bar Spacer - Much Larger -->
+    <!-- Status Bar Spacer -->
     <View
         android:id="@+id/status_bar_spacer"
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Top Bar - Positioned Much Lower -->
+    <!-- Top Bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -92,285 +92,360 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Main Content Area -->
-    <ScrollView
-        android:id="@+id/scroll_view"
+    <!-- Fragment Container for Navigation -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+        <!-- Main Content Area (Home Fragment) -->
+        <ScrollView
+            android:id="@+id/scroll_view_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <!-- Welcome Card -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/welcome_card"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white">
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
 
-                <LinearLayout
+                <!-- Welcome Card -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/welcome_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
+                    android:layout_marginBottom="24dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    app:cardBackgroundColor="@color/white">
 
-                    <!-- Welcome Title -->
-                    <TextView
-                        android:id="@+id/tv_welcome_title"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center"
-                        android:text="@string/main_welcome_title"
-                        android:textColor="#1976D2"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:lineSpacingExtra="4dp" />
+                        android:orientation="vertical"
+                        android:padding="24dp">
 
-                    <!-- Welcome Subtitle -->
-                    <TextView
-                        android:id="@+id/tv_welcome_subtitle"
+                        <!-- Welcome Title -->
+                        <TextView
+                            android:id="@+id/tv_welcome_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:text="@string/main_welcome_title"
+                            android:textColor="#1976D2"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:lineSpacingExtra="4dp" />
+
+                        <!-- Welcome Subtitle -->
+                        <TextView
+                            android:id="@+id/tv_welcome_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center"
+                            android:text="@string/main_welcome_subtitle"
+                            android:textColor="#546E7A"
+                            android:textSize="16sp"
+                            android:lineSpacingExtra="2dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Feature Cards Container -->
+                <LinearLayout
+                    android:id="@+id/feature_cards_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Habits Card (NEW) -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_habits"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="center"
-                        android:text="@string/main_welcome_subtitle"
-                        android:textColor="#546E7A"
-                        android:textSize="16sp"
-                        android:lineSpacingExtra="2dp" />
+                        android:layout_marginBottom="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        app:cardBackgroundColor="@color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/habits_emoji"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:background="#F3E5F5"
+                                android:gravity="center"
+                                android:text="✅"
+                                android:textSize="28sp"
+                                android:padding="8dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_habits_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Daily Habits"
+                                    android:textColor="#1976D2"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_habits_subtitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Track your daily wellness habits"
+                                    android:textColor="#546E7A"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_habits_arrow"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_arrow_right"
+                                android:contentDescription="Navigate to habits"
+                                app:tint="#1976D2" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Hydration Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_hydration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        app:cardBackgroundColor="@color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/hydration_emoji"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:background="#E0F7FA"
+                                android:gravity="center"
+                                android:text="💧"
+                                android:textSize="28sp"
+                                android:padding="8dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_hydration_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/card_hydration_title"
+                                    android:textColor="#1976D2"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_hydration_subtitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/card_hydration_subtitle"
+                                    android:textColor="#546E7A"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_hydration_arrow"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_arrow_right"
+                                android:contentDescription="@string/card_hydration_nav_description"
+                                app:tint="#1976D2" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Mood Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_mood"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        app:cardBackgroundColor="@color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/mood_emoji"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:background="#E3F2FD"
+                                android:gravity="center"
+                                android:text="😊"
+                                android:textSize="28sp"
+                                android:padding="8dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_mood_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/card_mood_title"
+                                    android:textColor="#1976D2"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_mood_subtitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/card_mood_subtitle"
+                                    android:textColor="#546E7A"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_mood_arrow"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_arrow_right"
+                                android:contentDescription="@string/card_mood_nav_description"
+                                app:tint="#1976D2" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Steps Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_steps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        app:cardBackgroundColor="@color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/steps_emoji"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:background="#E8F5E9"
+                                android:gravity="center"
+                                android:text="👟"
+                                android:textSize="28sp"
+                                android:padding="8dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_steps_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/card_steps_title"
+                                    android:textColor="#1976D2"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_steps_subtitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/card_steps_subtitle"
+                                    android:textColor="#546E7A"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_steps_arrow"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_arrow_right"
+                                android:contentDescription="@string/card_steps_nav_description"
+                                app:tint="#1976D2" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Feature Cards Container -->
-            <LinearLayout
-                android:id="@+id/feature_cards_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Hydration Card -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_hydration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="@color/white">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/hydration_emoji"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:background="#E0F7FA"
-                            android:gravity="center"
-                            android:text="💧"
-                            android:textSize="28sp"
-                            android:padding="8dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_hydration_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/card_hydration_title"
-                                android:textColor="#1976D2"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tv_hydration_subtitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="@string/card_hydration_subtitle"
-                                android:textColor="#546E7A"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/iv_hydration_arrow"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_right"
-                            android:contentDescription="@string/card_hydration_nav_description"
-                            app:tint="#1976D2" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Mood Card -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_mood"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="@color/white">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/mood_emoji"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:background="#E3F2FD"
-                            android:gravity="center"
-                            android:text="😊"
-                            android:textSize="28sp"
-                            android:padding="8dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_mood_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/card_mood_title"
-                                android:textColor="#1976D2"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tv_mood_subtitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="@string/card_mood_subtitle"
-                                android:textColor="#546E7A"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/iv_mood_arrow"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_right"
-                            android:contentDescription="@string/card_mood_nav_description"
-                            app:tint="#1976D2" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Steps Card -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_steps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="@color/white">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/steps_emoji"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:background="#E8F5E9"
-                            android:gravity="center"
-                            android:text="👟"
-                            android:textSize="28sp"
-                            android:padding="8dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_steps_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/card_steps_title"
-                                android:textColor="#1976D2"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tv_steps_subtitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="@string/card_steps_subtitle"
-                                android:textColor="#546E7A"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/iv_steps_arrow"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_right"
-                            android:contentDescription="@string/card_steps_nav_description"
-                            app:tint="#1976D2" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
+        </ScrollView>
+    </FrameLayout>
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
