@@ -32,8 +32,8 @@ class MoodManager(context: Context) : DataManager(context) {
                 Log.d(TAG, "Added new mood entry")
             }
 
-            // Sort by timestamp (most recent first)
-            moods.sortByDescending { it.timestamp }
+            // FIXED: Don't sort here - let the UI handle sorting for display
+            // Remove this line: moods.sortByDescending { it.timestamp }
             saveList(MOOD_ENTRIES_KEY, moods)
 
             Log.d(TAG, "Mood entry saved successfully. Total entries: ${moods.size}")
@@ -56,6 +56,17 @@ class MoodManager(context: Context) : DataManager(context) {
 
     fun getMoodEntriesForDate(date: String): List<MoodEntry> {
         return getAllMoodEntries().filter { it.date == date }
+            .sortedWith { entry1, entry2 ->
+                // Sort by time chronologically for the same date
+                try {
+                    val time1 = entry1.time.split(":").let { it[0].toInt() * 60 + it[1].toInt() }
+                    val time2 = entry2.time.split(":").let { it[0].toInt() * 60 + it[1].toInt() }
+                    time1.compareTo(time2)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error sorting by time", e)
+                    entry1.timestamp.compareTo(entry2.timestamp)
+                }
+            }
     }
 
     fun getTodayMoodEntries(): List<MoodEntry> {
@@ -72,6 +83,19 @@ class MoodManager(context: Context) : DataManager(context) {
 
         return getAllMoodEntries().filter { entry ->
             entry.date >= startDate && entry.date <= endDate
+        }.sortedWith { entry1, entry2 ->
+            // First sort by date
+            val dateComparison = entry1.date.compareTo(entry2.date)
+            if (dateComparison != 0) return@sortedWith dateComparison
+
+            // Then sort by time
+            try {
+                val time1 = entry1.time.split(":").let { it[0].toInt() * 60 + it[1].toInt() }
+                val time2 = entry2.time.split(":").let { it[0].toInt() * 60 + it[1].toInt() }
+                time1.compareTo(time2)
+            } catch (e: Exception) {
+                entry1.timestamp.compareTo(entry2.timestamp)
+            }
         }
     }
 
@@ -164,19 +188,21 @@ class MoodManager(context: Context) : DataManager(context) {
 
         // Define 6-hour intervals: 0-6, 6-12, 12-18, 18-24
         val timeIntervals = listOf(
-            Pair(0, 6),   // Early Morning (00:00-06:00)
             Pair(6, 12),  // Morning (06:00-12:00)
             Pair(12, 18), // Afternoon (12:00-18:00)
             Pair(18, 24)  // Evening (18:00-24:00)
         )
 
-        val intervalLabels = listOf("Night", "Morning", "Afternoon", "Evening")
+        val intervalLabels = listOf("Morning", "Afternoon", "Evening")
 
-        for (day in 0 until days) {
-            val date = dateFormat.format(calendar.time)
+        // Process days in reverse chronological order (oldest to newest for chart)
+        for (day in (days - 1) downTo 0) {
+            val tempCalendar = Calendar.getInstance()
+            tempCalendar.add(Calendar.DAY_OF_YEAR, -day)
+            val date = dateFormat.format(tempCalendar.time)
             val dayEntries = getMoodEntriesForDate(date)
 
-            // Process each 6-hour interval for this day
+            // Process each time interval in chronological order within the day
             timeIntervals.forEachIndexed { index, (startHour, endHour) ->
                 val intervalEntries = dayEntries.filter { entry ->
                     val entryHour = getHourFromTime(entry.time)
@@ -189,18 +215,25 @@ class MoodManager(context: Context) : DataManager(context) {
                     0f // No mood data for this interval
                 }
 
-                // Create a label like "Oct-20 Morning" or "Oct-19 Evening"
-                val dateLabel = if (date.length >= 10) date.substring(5) else date
-                val intervalLabel = "$dateLabel ${intervalLabels[index]}"
+                // Only add non-zero data points to avoid empty intervals
+                if (avgMood > 0f) {
+                    // Create a label like "10-20 Morning" or "10-19 Evening"
+                    val dateLabel = if (date.length >= 10) {
+                        "${date.substring(5, 7)}-${date.substring(8, 10)}"
+                    } else {
+                        date
+                    }
+                    val intervalLabel = "$dateLabel ${intervalLabels[index]}"
 
-                // Add at beginning to maintain chronological order (oldest first)
-                trendData.add(0, Pair(intervalLabel, avgMood))
+                    trendData.add(Pair(intervalLabel, avgMood))
+
+                    Log.d(TAG, "Added chart data: $intervalLabel -> $avgMood")
+                }
             }
-
-            calendar.add(Calendar.DAY_OF_YEAR, -1)
         }
 
-        return trendData.takeLast(days * 4) // Limit to requested days * 4 intervals per day
+        Log.d(TAG, "Generated ${trendData.size} chart data points in chronological order")
+        return trendData
     }
 
     /**

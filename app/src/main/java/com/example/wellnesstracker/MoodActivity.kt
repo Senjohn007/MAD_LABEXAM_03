@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -27,7 +24,11 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.min
 
 class MoodActivity : AppCompatActivity() {
@@ -61,11 +62,32 @@ class MoodActivity : AppCompatActivity() {
     private lateinit var tvMoodTrend: TextView
     private lateinit var bottomNavigation: BottomNavigationView
 
+    // New UI Components from layout
+    private lateinit var tvCurrentDate: TextView
+    private lateinit var btnPreviousDay: ImageButton
+    private lateinit var btnNextDay: ImageButton
+    private lateinit var btnMorning: Button
+    private lateinit var btnAfternoon: Button
+    private lateinit var btnEvening: Button
+    private lateinit var chipGroupFactors: ChipGroup
+    private lateinit var btnPeriodWeek: Button
+    private lateinit var btnPeriodMonth: Button
+    private lateinit var btnPeriodYear: Button
+
+    // Additional views from layout
+    private lateinit var tvAverageMood: TextView
+    private lateinit var tvTopFactor: TextView
+    private lateinit var tvTodayEntries: TextView
+
     // Data and state
     private var selectedMood: MoodType? = null
+    private var selectedTimeOfDay: String? = null
     private lateinit var adapter: MoodHistoryAdapter
     private val emojiViews = mutableListOf<TextView>()
     private var isDataLoading = false
+    private var currentDate = Calendar.getInstance()
+    private val dateFormat = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault())
+    private val timeOfDayFormat = SimpleDateFormat("HH", Locale.getDefault())
 
     // Coroutines
     private val activityScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
@@ -93,6 +115,10 @@ class MoodActivity : AppCompatActivity() {
             setupClickListeners()
             setupRecyclerView()
             setupChart()
+            setupDateNavigation()
+            setupTimeOfDaySelection()
+            setupPeriodSelection()
+            setupFactorsSelection()
 
             // Load data asynchronously
             loadDataAsync()
@@ -125,6 +151,23 @@ class MoodActivity : AppCompatActivity() {
             tvMoodTrend = findViewById(R.id.tv_mood_trend)
             bottomNavigation = findViewById(R.id.bottom_navigation)
 
+            // Initialize new views
+            tvCurrentDate = findViewById(R.id.tv_current_date)
+            btnPreviousDay = findViewById(R.id.btn_previous_day)
+            btnNextDay = findViewById(R.id.btn_next_day)
+            btnMorning = findViewById(R.id.btn_morning)
+            btnAfternoon = findViewById(R.id.btn_afternoon)
+            btnEvening = findViewById(R.id.btn_evening)
+            chipGroupFactors = findViewById(R.id.chip_group_factors)
+            btnPeriodWeek = findViewById(R.id.btn_period_week)
+            btnPeriodMonth = findViewById(R.id.btn_period_month)
+            btnPeriodYear = findViewById(R.id.btn_period_year)
+
+            // Initialize additional views
+            tvAverageMood = findViewById(R.id.tv_average_mood)
+            tvTopFactor = findViewById(R.id.tv_top_factor)
+            tvTodayEntries = findViewById(R.id.tv_today_entries)
+
             // Populate emoji views list
             emojiViews.apply {
                 clear()
@@ -134,11 +177,138 @@ class MoodActivity : AppCompatActivity() {
             // Initially disable save button
             btnSaveMood.isEnabled = false
 
+            // Set current date
+            updateDateDisplay()
+
             Log.d(TAG, "Views initialized successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing views", e)
             throw e
         }
+    }
+
+    private fun setupDateNavigation() {
+        btnPreviousDay.setOnClickListener {
+            currentDate.add(Calendar.DAY_OF_MONTH, -1)
+            updateDateDisplay()
+            refreshUI()
+        }
+
+        btnNextDay.setOnClickListener {
+            currentDate.add(Calendar.DAY_OF_MONTH, 1)
+            updateDateDisplay()
+            refreshUI()
+        }
+    }
+
+    private fun updateDateDisplay() {
+        val today = Calendar.getInstance()
+        if (currentDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) &&
+            currentDate.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+            tvCurrentDate.text = "Today, ${dateFormat.format(currentDate.time)}"
+        } else {
+            tvCurrentDate.text = dateFormat.format(currentDate.time)
+        }
+    }
+
+    private fun setupTimeOfDaySelection() {
+        btnMorning.setOnClickListener {
+            selectTimeOfDay("Morning")
+        }
+        btnAfternoon.setOnClickListener {
+            selectTimeOfDay("Afternoon")
+        }
+        btnEvening.setOnClickListener {
+            selectTimeOfDay("Evening")
+        }
+    }
+
+    private fun selectTimeOfDay(timeOfDay: String) {
+        selectedTimeOfDay = timeOfDay
+
+        // Reset button styles
+        btnMorning.setBackgroundResource(R.drawable.time_selector_unselected)
+        btnAfternoon.setBackgroundResource(R.drawable.time_selector_unselected)
+        btnEvening.setBackgroundResource(R.drawable.time_selector_unselected)
+        btnMorning.setTextColor(Color.parseColor("#757575"))
+        btnAfternoon.setTextColor(Color.parseColor("#757575"))
+        btnEvening.setTextColor(Color.parseColor("#757575"))
+
+        // Highlight selected button
+        when (timeOfDay) {
+            "Morning" -> {
+                btnMorning.setBackgroundResource(R.drawable.time_selector_selected)
+                btnMorning.setTextColor(Color.WHITE)
+            }
+            "Afternoon" -> {
+                btnAfternoon.setBackgroundResource(R.drawable.time_selector_selected)
+                btnAfternoon.setTextColor(Color.WHITE)
+            }
+            "Evening" -> {
+                btnEvening.setBackgroundResource(R.drawable.time_selector_selected)
+                btnEvening.setTextColor(Color.WHITE)
+            }
+        }
+
+        updateSaveButtonState()
+    }
+
+    private fun setupPeriodSelection() {
+        btnPeriodWeek.setOnClickListener {
+            selectPeriod(0)
+        }
+        btnPeriodMonth.setOnClickListener {
+            selectPeriod(1)
+        }
+        btnPeriodYear.setOnClickListener {
+            selectPeriod(2)
+        }
+
+        // Set month as default
+        selectPeriod(1)
+    }
+
+    private fun selectPeriod(period: Int) {
+        // Reset button styles
+        btnPeriodWeek.setBackgroundResource(R.drawable.period_selector_unselected)
+        btnPeriodMonth.setBackgroundResource(R.drawable.period_selector_unselected)
+        btnPeriodYear.setBackgroundResource(R.drawable.period_selector_unselected)
+        btnPeriodWeek.setTextColor(Color.parseColor("#757575"))
+        btnPeriodMonth.setTextColor(Color.parseColor("#757575"))
+        btnPeriodYear.setTextColor(Color.parseColor("#757575"))
+
+        // Highlight selected button
+        when (period) {
+            0 -> {
+                btnPeriodWeek.setBackgroundResource(R.drawable.period_selector_selected)
+                btnPeriodWeek.setTextColor(Color.WHITE)
+            }
+            1 -> {
+                btnPeriodMonth.setBackgroundResource(R.drawable.period_selector_selected)
+                btnPeriodMonth.setTextColor(Color.WHITE)
+            }
+            2 -> {
+                btnPeriodYear.setBackgroundResource(R.drawable.period_selector_selected)
+                btnPeriodYear.setTextColor(Color.WHITE)
+            }
+        }
+
+        updateChart(period)
+    }
+
+    private fun setupFactorsSelection() {
+        // Factors are handled in saveMoodEntry by checking selected chips
+    }
+
+    private fun getSelectedFactors(): List<String> {
+        val selectedFactors = mutableListOf<String>()
+        for (i in 0 until chipGroupFactors.childCount) {
+            val chip = chipGroupFactors.getChildAt(i) as Chip
+            if (chip.isChecked) {
+                selectedFactors.add(chip.text.toString())
+            }
+        }
+        return selectedFactors
     }
 
     private fun setupToolbar() {
@@ -389,7 +559,6 @@ class MoodActivity : AppCompatActivity() {
         }
     }
 
-    // FIXED: Updated saveMoodEntry method with proper threading and UI updates
     private fun saveMoodEntry() {
         val mood = selectedMood
         if (mood == null) {
@@ -402,9 +571,19 @@ class MoodActivity : AppCompatActivity() {
                 isDataLoading = true
                 updateSaveButtonState()
 
+                // Get current date in yyyy-MM-dd format
+                val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(currentDate.time)
+                val timeStr = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+
+                // Get selected factors
+                val factors = getSelectedFactors()
+
+                // Convert factors to comma-separated string for storage
+                val factorsStr = if (factors.isNotEmpty()) factors.joinToString(",") else ""
+
                 val entry = MoodEntry(
-                    date = DateUtils.getCurrentDate(),
-                    time = DateUtils.getCurrentTime(),
+                    date = dateStr,
+                    time = timeStr,
                     moodEmoji = mood.emoji,
                     moodLevel = mood.level,
                     notes = etMoodNote.text.toString().trim()
@@ -445,15 +624,27 @@ class MoodActivity : AppCompatActivity() {
 
     private fun clearMoodSelection() {
         selectedMood = null
+        selectedTimeOfDay = null
         emojiViews.forEach { it.setBackgroundColor(Color.TRANSPARENT) }
         etMoodNote.text.clear()
+
+        // Reset time of day buttons
+        btnMorning.setBackgroundResource(R.drawable.time_selector_unselected)
+        btnAfternoon.setBackgroundResource(R.drawable.time_selector_unselected)
+        btnEvening.setBackgroundResource(R.drawable.time_selector_unselected)
+        btnMorning.setTextColor(Color.parseColor("#757575"))
+        btnAfternoon.setTextColor(Color.parseColor("#757575"))
+        btnEvening.setTextColor(Color.parseColor("#757575"))
+
+        // Clear factor chips
+        chipGroupFactors.clearCheck()
     }
 
-    // UPDATED: Enhanced refreshUI with time-based interval display
     private fun refreshUI() {
         try {
-            val entries = moodManager.getAllMoodEntries()
-            Log.d(TAG, "Refreshing UI with ${entries.size} entries")
+            val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(currentDate.time)
+            val entries = moodManager.getMoodEntriesForDate(dateStr)
+            Log.d(TAG, "Refreshing UI with ${entries.size} entries for date $dateStr")
 
             // Debug logging to verify data retrieval
             entries.take(3).forEachIndexed { index, entry ->
@@ -471,7 +662,7 @@ class MoodActivity : AppCompatActivity() {
             // Update insights and chart with time-based data
             updateInsights(entries)
             updateChart() // Now uses detailed time-based data
-            updateTodayIntervalDisplay() // New method for interval insights
+            updateTodayEntriesDisplay() // New method for today's entries
 
             Log.d(TAG, "UI refreshed successfully - RecyclerView has ${adapter.itemCount} items")
         } catch (e: Exception) {
@@ -479,16 +670,22 @@ class MoodActivity : AppCompatActivity() {
         }
     }
 
-    // UPDATED: Enhanced insights with interval-based information
     private fun updateInsights(entries: List<MoodEntry>) {
         try {
             if (entries.isEmpty()) {
+                tvAverageMood.text = "No data yet"
                 tvMostCommonMood.text = "No data yet"
                 tvMoodTrend.text = "Start tracking!"
+                tvTopFactor.text = "No data yet"
                 return
             }
 
-            // Most common mood (existing logic)
+            // Average mood
+            val avgMoodLevel = entries.map { it.moodLevel }.average()
+            val avgMoodType = MoodType.values().find { it.level == avgMoodLevel.toInt() }
+            tvAverageMood.text = "${avgMoodType?.label ?: "Unknown"} ${avgMoodType?.emoji ?: ""}"
+
+            // Most common mood
             val moodCounts = entries.groupingBy { it.moodEmoji }.eachCount()
             val mostCommon = moodCounts.maxByOrNull { it.value }
             tvMostCommonMood.text = "${mostCommon?.key} (${mostCommon?.value} times)"
@@ -496,6 +693,14 @@ class MoodActivity : AppCompatActivity() {
             // Enhanced trend calculation with time awareness
             val weeklyEntries = moodManager.getWeeklyMoodEntries()
             updateTrendDisplay(weeklyEntries)
+
+            // Top factor
+            val allFactors = entries.flatMap { entry ->
+                entry.notes.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+            }
+            val factorCounts = allFactors.groupingBy { it }.eachCount()
+            val topFactor = factorCounts.maxByOrNull { it.value }
+            tvTopFactor.text = topFactor?.key ?: "No factors"
 
             // Log today's interval statistics for debugging
             try {
@@ -540,28 +745,43 @@ class MoodActivity : AppCompatActivity() {
         }
     }
 
-    // NEW: Display today's interval information
-    private fun updateTodayIntervalDisplay() {
+    private fun updateTodayEntriesDisplay() {
         try {
-            val intervalStats = moodManager.getTodayIntervalStats()
-            Log.d(TAG, intervalStats)
+            // Get today's entries
+            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            val todayEntries = moodManager.getMoodEntriesForDate(today)
 
-            // Log interval breakdown for debugging
-            val intervalData = moodManager.getTodayMoodsByInterval()
-            intervalData.forEach { (interval, entries) ->
-                if (entries.isNotEmpty()) {
-                    val avgMood = entries.map { it.moodLevel }.average()
-                    Log.d(TAG, "$interval: ${entries.size} entries, avg mood: ${"%.1f".format(avgMood)}")
-                }
+            // Count entries by time of day
+            val morningCount = todayEntries.count {
+                val hour = it.time.split(":")[0].toInt()
+                hour in 6..11
+            }
+            val afternoonCount = todayEntries.count {
+                val hour = it.time.split(":")[0].toInt()
+                hour in 12..17
+            }
+            val eveningCount = todayEntries.count {
+                val hour = it.time.split(":")[0].toInt()
+                hour in 18..23 || hour in 0..5
             }
 
+            // Update the today entries text view
+            val totalEntries = todayEntries.size
+            val timeOfDayEntries = when {
+                Calendar.getInstance().get(Calendar.HOUR_OF_DAY) in 6..11 -> morningCount
+                Calendar.getInstance().get(Calendar.HOUR_OF_DAY) in 12..17 -> afternoonCount
+                else -> eveningCount
+            }
+
+            tvTodayEntries.text = "$totalEntries entries today"
+
+            Log.d(TAG, "Today's entries: $totalEntries (Morning: $morningCount, Afternoon: $afternoonCount, Evening: $eveningCount)")
         } catch (e: Exception) {
-            Log.e(TAG, "Error updating today interval display", e)
+            Log.e(TAG, "Error updating today entries display", e)
         }
     }
 
-    // UPDATED: Enhanced chart with time-based intervals
-    private fun updateChart() {
+    private fun updateChart(period: Int = 1) {
         try {
             // Use detailed trend data instead of daily averages
             val trendData = moodManager.getDetailedMoodTrendData(MOOD_HISTORY_DAYS)
@@ -655,7 +875,29 @@ class MoodActivity : AppCompatActivity() {
         Log.d(TAG, "MoodActivity destroyed")
     }
 
-    // FIXED: Optimized RecyclerView Adapter with corrected notification logic
+    // Helper function to get time of day from hour
+    private fun getTimeOfDayFromHour(hour: Int): String {
+        return when {
+            hour in 6..11 -> "Morning"
+            hour in 12..17 -> "Afternoon"
+            hour in 18..23 || hour in 0..5 -> "Evening"
+            else -> "Unknown"
+        }
+    }
+
+    // Helper function to convert date and time to milliseconds for proper sorting
+    private fun getDateTimeMillis(entry: MoodEntry): Long {
+        return try {
+            val dateTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+            val dateTimeString = "${entry.date} ${entry.time}"
+            dateTimeFormat.parse(dateTimeString)?.time ?: 0L
+        } catch (e: Exception) {
+            Log.e(TAG, "Error parsing datetime: ${entry.date} ${entry.time}", e)
+            0L
+        }
+    }
+
+    // FIXED: RecyclerView Adapter with PROPER CHRONOLOGICAL sorting
     private inner class MoodHistoryAdapter : RecyclerView.Adapter<MoodHistoryAdapter.ViewHolder>() {
 
         private var entries = listOf<MoodEntry>()
@@ -665,6 +907,7 @@ class MoodActivity : AppCompatActivity() {
             val tvMoodLabel: TextView = view.findViewById(R.id.tv_mood_label)
             val tvMoodTime: TextView = view.findViewById(R.id.tv_mood_time)
             val tvMoodNote: TextView = view.findViewById(R.id.tv_mood_note)
+            val tvTimeBadge: TextView = view.findViewById(R.id.tv_time_badge)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -695,7 +938,13 @@ class MoodActivity : AppCompatActivity() {
                     setTextColor(labelColor)
                 }
 
+                // Display formatted date and time
                 holder.tvMoodTime.text = "${DateUtils.formatDateForDisplay(entry.date)} at ${entry.time}"
+
+                // Set time badge
+                val hour = try { entry.time.split(":")[0].toInt() } catch (e: Exception) { 12 }
+                val timeOfDay = getTimeOfDayFromHour(hour)
+                holder.tvTimeBadge.text = timeOfDay
 
                 // Handle notes visibility
                 if (entry.notes.isBlank()) {
@@ -712,19 +961,44 @@ class MoodActivity : AppCompatActivity() {
 
         override fun getItemCount() = entries.size
 
-        // FIXED: Simplified and reliable updateEntries method
+        // CRITICAL FIX: Proper sorting by datetime
         fun updateEntries(newEntries: List<MoodEntry>) {
             val oldSize = entries.size
-            entries = newEntries.sortedByDescending { it.timestamp }
 
-            // Use reliable notification - this is the key fix
+            // Sort entries properly:
+            // 1. For different dates: newer dates first
+            // 2. For same date: chronological time order (morning -> afternoon -> evening)
+            entries = newEntries.sortedWith { entry1, entry2 ->
+                try {
+                    // First compare dates (newer dates first)
+                    val dateComparison = entry2.date.compareTo(entry1.date)
+                    if (dateComparison != 0) {
+                        return@sortedWith dateComparison
+                    }
+
+                    // For same date, sort chronologically by time
+                    val dateTimeMillis1 = getDateTimeMillis(entry1)
+                    val dateTimeMillis2 = getDateTimeMillis(entry2)
+
+                    // Within same date: earlier times first (chronological order)
+                    dateTimeMillis1.compareTo(dateTimeMillis2)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error sorting entries", e)
+                    entry1.timestamp.compareTo(entry2.timestamp)
+                }
+            }
+
+            // Use reliable notification
             notifyDataSetChanged()
 
             Log.d(TAG, "Adapter updated: ${entries.size} entries (was $oldSize)")
 
-            // Debug: Log first few entries to verify data
-            entries.take(3).forEachIndexed { index, entry ->
-                Log.d(TAG, "Adapter Entry $index: ${entry.moodEmoji} - ${entry.date} ${entry.time}")
+            // Debug: Log sorted entries to verify correct order
+            entries.forEachIndexed { index, entry ->
+                val millis = getDateTimeMillis(entry)
+                val hour = try { entry.time.split(":")[0].toInt() } catch (e: Exception) { -1 }
+                val timeOfDay = getTimeOfDayFromHour(hour)
+                Log.d(TAG, "Final Entry $index: ${entry.moodEmoji} - ${entry.date} ${entry.time} ($timeOfDay) [${millis}ms]")
             }
         }
     }

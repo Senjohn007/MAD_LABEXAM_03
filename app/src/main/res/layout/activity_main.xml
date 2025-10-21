@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -10,27 +9,93 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <!-- Decorative Elements -->
+    <!-- Enhanced Decorative Circles (Updated Color & Alpha) -->
     <View
-        android:id="@+id/decorative_top"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/decorative_top_left"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:background="@drawable/circle_decorative"
-        android:layout_marginTop="-60dp"
-        android:layout_marginStart="-60dp"
-        android:alpha="0.1"
+        android:layout_marginTop="-100dp"
+        android:layout_marginStart="-100dp"
+        android:alpha="0.15"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/decorative_bottom"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/decorative_top_right"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@drawable/circle_decorative"
-        android:layout_marginBottom="-40dp"
-        android:layout_marginEnd="-40dp"
-        android:alpha="0.1"
+        android:layout_marginTop="-75dp"
+        android:layout_marginEnd="-75dp"
+        android:alpha="0.10"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/decorative_center_left"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginStart="-90dp"
+        android:layout_marginTop="150dp"
+        android:alpha="0.07"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/decorative_center_right"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginEnd="-80dp"
+        android:layout_marginTop="300dp"
+        android:alpha="0.11"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/decorative_middle_center"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginTop="100dp"
+        android:alpha="0.06"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/decorative_bottom_left"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-85dp"
+        android:layout_marginStart="-85dp"
+        android:alpha="0.12"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/decorative_bottom_right"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-70dp"
+        android:layout_marginEnd="-70dp"
+        android:alpha="0.09"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/decorative_bottom_center"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:background="@drawable/circle_decorative"
+        android:layout_marginBottom="-95dp"
+        android:alpha="0.07"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Status Bar Spacer -->
@@ -47,10 +112,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         android:elevation="4dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/status_bar_spacer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,8 +128,8 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
 
             <TextView
                 android:id="@+id/tv_toolbar_title"
@@ -73,21 +137,33 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/main_toolbar_title"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#1976D2" />
+                android:textColor="#0288D1"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.02" />
 
-            <ImageView
-                android:id="@+id/iv_profile"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:contentDescription="@string/main_profile_description"
-                android:focusable="true"
-                android:padding="4dp"
-                android:src="@drawable/ic_profile"
-                tools:ignore="TouchTargetSizeCheck" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="#E1F5FE">
+
+                <ImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/main_profile_description"
+                    android:focusable="true"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_profile"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -103,63 +179,65 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Main Content Area (Home Fragment) -->
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp">
+                android:paddingHorizontal="20dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="100dp">
 
                 <!-- Welcome Card -->
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/welcome_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="6dp"
-                    app:cardBackgroundColor="@color/white">
+                    android:layout_marginBottom="32dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="#FFFFFF">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="28dp">
 
-                        <!-- Welcome Title -->
                         <TextView
                             android:id="@+id/tv_welcome_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginBottom="12dp"
                             android:gravity="center"
                             android:text="@string/main_welcome_title"
-                            android:textColor="#1976D2"
-                            android:textSize="24sp"
+                            android:textColor="#0288D1"
+                            android:textSize="28sp"
                             android:textStyle="bold"
-                            android:lineSpacingExtra="4dp" />
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.01"
+                            android:lineSpacingExtra="6dp" />
 
-                        <!-- Welcome Subtitle -->
                         <TextView
                             android:id="@+id/tv_welcome_subtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
                             android:gravity="center"
                             android:text="@string/main_welcome_subtitle"
                             android:textColor="#546E7A"
-                            android:textSize="16sp"
-                            android:lineSpacingExtra="2dp" />
+                            android:textSize="17sp"
+                            android:fontFamily="sans-serif"
+                            android:lineSpacingExtra="4dp" />
 
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- Feature Cards Container -->
                 <LinearLayout
@@ -168,40 +246,50 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Habits Card (NEW) -->
-                    <androidx.cardview.widget.CardView
+                    <!-- Habits Card -->
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_habits"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="20dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="4dp"
-                        app:cardBackgroundColor="@color/white">
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#ECEFF1"
+                        app:cardBackgroundColor="#FFFFFF">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="20dp"
+                            android:padding="24dp"
                             android:gravity="center_vertical">
 
-                            <TextView
-                                android:id="@+id/habits_emoji"
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                android:background="#F3E5F5"
-                                android:gravity="center"
-                                android:text="✅"
-                                android:textSize="28sp"
-                                android:padding="8dp" />
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="0dp"
+                                app:strokeWidth="0dp"
+                                app:cardBackgroundColor="#E1F5FE">
+
+                                <TextView
+                                    android:id="@+id/habits_emoji"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="✅"
+                                    android:textSize="32sp" />
+
+                            </com.google.android.material.card.MaterialCardView>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
@@ -210,9 +298,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Daily Habits"
-                                    android:textColor="#1976D2"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="#0288D1"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="sans-serif-medium" />
 
                                 <TextView
                                     android:id="@+id/tv_habits_subtitle"
@@ -221,55 +310,66 @@
                                     android:layout_marginTop="6dp"
                                     android:text="Track your daily wellness habits"
                                     android:textColor="#546E7A"
-                                    android:textSize="15sp" />
+                                    android:textSize="16sp"
+                                    android:fontFamily="sans-serif" />
 
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/iv_habits_arrow"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:src="@drawable/ic_arrow_right"
                                 android:contentDescription="Navigate to habits"
-                                app:tint="#1976D2" />
+                                app:tint="#03A9F4" />
 
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <!-- Hydration Card -->
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_hydration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="20dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="4dp"
-                        app:cardBackgroundColor="@color/white">
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#ECEFF1"
+                        app:cardBackgroundColor="#FFFFFF">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="20dp"
+                            android:padding="24dp"
                             android:gravity="center_vertical">
 
-                            <TextView
-                                android:id="@+id/hydration_emoji"
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                android:background="#E0F7FA"
-                                android:gravity="center"
-                                android:text="💧"
-                                android:textSize="28sp"
-                                android:padding="8dp" />
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="0dp"
+                                app:strokeWidth="0dp"
+                                app:cardBackgroundColor="#E1F5FE">
+
+                                <TextView
+                                    android:id="@+id/hydration_emoji"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="💧"
+                                    android:textSize="32sp" />
+
+                            </com.google.android.material.card.MaterialCardView>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
@@ -278,9 +378,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/card_hydration_title"
-                                    android:textColor="#1976D2"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="#0288D1"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="sans-serif-medium" />
 
                                 <TextView
                                     android:id="@+id/tv_hydration_subtitle"
@@ -289,55 +390,66 @@
                                     android:layout_marginTop="6dp"
                                     android:text="@string/card_hydration_subtitle"
                                     android:textColor="#546E7A"
-                                    android:textSize="15sp" />
+                                    android:textSize="16sp"
+                                    android:fontFamily="sans-serif" />
 
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/iv_hydration_arrow"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:src="@drawable/ic_arrow_right"
                                 android:contentDescription="@string/card_hydration_nav_description"
-                                app:tint="#1976D2" />
+                                app:tint="#03A9F4" />
 
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <!-- Mood Card -->
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_mood"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="20dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="4dp"
-                        app:cardBackgroundColor="@color/white">
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#ECEFF1"
+                        app:cardBackgroundColor="#FFFFFF">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="20dp"
+                            android:padding="24dp"
                             android:gravity="center_vertical">
 
-                            <TextView
-                                android:id="@+id/mood_emoji"
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                android:background="#E3F2FD"
-                                android:gravity="center"
-                                android:text="😊"
-                                android:textSize="28sp"
-                                android:padding="8dp" />
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="0dp"
+                                app:strokeWidth="0dp"
+                                app:cardBackgroundColor="#E1F5FE">
+
+                                <TextView
+                                    android:id="@+id/mood_emoji"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="😊"
+                                    android:textSize="32sp" />
+
+                            </com.google.android.material.card.MaterialCardView>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
@@ -346,9 +458,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/card_mood_title"
-                                    android:textColor="#1976D2"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="#0288D1"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="sans-serif-medium" />
 
                                 <TextView
                                     android:id="@+id/tv_mood_subtitle"
@@ -357,55 +470,66 @@
                                     android:layout_marginTop="6dp"
                                     android:text="@string/card_mood_subtitle"
                                     android:textColor="#546E7A"
-                                    android:textSize="15sp" />
+                                    android:textSize="16sp"
+                                    android:fontFamily="sans-serif" />
 
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/iv_mood_arrow"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:src="@drawable/ic_arrow_right"
                                 android:contentDescription="@string/card_mood_nav_description"
-                                app:tint="#1976D2" />
+                                app:tint="#03A9F4" />
 
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <!-- Steps Card -->
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_steps"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="20dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="4dp"
-                        app:cardBackgroundColor="@color/white">
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#ECEFF1"
+                        app:cardBackgroundColor="#FFFFFF">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="20dp"
+                            android:padding="24dp"
                             android:gravity="center_vertical">
 
-                            <TextView
-                                android:id="@+id/steps_emoji"
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                android:background="#E8F5E9"
-                                android:gravity="center"
-                                android:text="👟"
-                                android:textSize="28sp"
-                                android:padding="8dp" />
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="0dp"
+                                app:strokeWidth="0dp"
+                                app:cardBackgroundColor="#E1F5FE">
+
+                                <TextView
+                                    android:id="@+id/steps_emoji"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="👟"
+                                    android:textSize="32sp" />
+
+                            </com.google.android.material.card.MaterialCardView>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
@@ -414,9 +538,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/card_steps_title"
-                                    android:textColor="#1976D2"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="#0288D1"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="sans-serif-medium" />
 
                                 <TextView
                                     android:id="@+id/tv_steps_subtitle"
@@ -425,26 +550,27 @@
                                     android:layout_marginTop="6dp"
                                     android:text="@string/card_steps_subtitle"
                                     android:textColor="#546E7A"
-                                    android:textSize="15sp" />
+                                    android:textSize="16sp"
+                                    android:fontFamily="sans-serif" />
 
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/iv_steps_arrow"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:src="@drawable/ic_arrow_right"
                                 android:contentDescription="@string/card_steps_nav_description"
-                                app:tint="#1976D2" />
+                                app:tint="#03A9F4" />
 
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </FrameLayout>
 
     <!-- Bottom Navigation -->
@@ -453,13 +579,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:elevation="8dp"
+        android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:itemIconTint="@color/bottom_nav_color"
-        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="#0288D1"
+        app:itemTextColor="#0288D1"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconSize="28dp"
+        app:itemPaddingTop="8dp"
+        app:itemPaddingBottom="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
