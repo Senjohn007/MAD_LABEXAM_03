@@ -129,6 +129,16 @@
                 android:value=".ProfileActivity" />
         </activity>
 
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
         <!-- Services -->
         <service
             android:name=".services.StepCounterService"

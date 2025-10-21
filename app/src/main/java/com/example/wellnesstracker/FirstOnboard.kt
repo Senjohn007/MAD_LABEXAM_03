@@ -22,10 +22,17 @@ class FirstOnboard : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Skip button - Navigate to SecondOnboard
+        // Skip button - Clear session and navigate to LoginActivity
         tvSkip.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            // Clear any existing session first
+            val sessionManager = SessionManager(this)
+            sessionManager.clearSession()
+
+            // Then navigate to LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            finish()
         }
     }
 }

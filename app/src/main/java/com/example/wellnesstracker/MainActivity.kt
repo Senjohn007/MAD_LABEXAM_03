@@ -16,6 +16,7 @@ import com.example.wellnesstracker.ui.HabitTrackerFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sessionManager: SessionManager
     private val TAG = "MainActivity"
     private var currentDestination: String = "home"
     private var habitFragment: HabitTrackerFragment? = null
@@ -25,6 +26,16 @@ class MainActivity : AppCompatActivity() {
 
         try {
             Log.d(TAG, "MainActivity onCreate started")
+
+            // Initialize SessionManager first
+            sessionManager = SessionManager(this)
+
+            // Check if user is logged in before proceeding
+            if (!sessionManager.isLoggedIn()) {
+                Log.d(TAG, "User not logged in, navigating to LoginActivity")
+                navigateToLogin()
+                return
+            }
 
             enableEdgeToEdge()
             binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,6 +52,9 @@ class MainActivity : AppCompatActivity() {
             setupCardClickListeners()
             setupProfileClickListener()
 
+            // Setup personalized greeting and content
+            setupPersonalizedContent()
+
             // Set default view (Home) - only if not restored from saved state
             if (savedInstanceState == null) {
                 showHomeView()
@@ -52,6 +66,45 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Error in MainActivity onCreate", e)
             showToast("Error initializing app: ${e.message}")
+        }
+    }
+
+    private fun setupPersonalizedContent() {
+        try {
+            Log.d(TAG, "Setting up personalized content")
+
+            // Update the welcome title with personalized greeting
+            val personalizedGreeting = sessionManager.getPersonalizedGreeting()
+            binding.tvWelcomeTitle.text = personalizedGreeting
+
+            // Update toolbar title with first name
+            val firstName = sessionManager.getFirstName()
+            val toolbarTitle = "$firstName"
+            binding.tvToolbarTitle.text = toolbarTitle
+
+            // Update welcome subtitle with personalized message
+            binding.tvWelcomeSubtitle.text = "Let's continue your wellness journey together!"
+
+            Log.d(TAG, "Personalized content setup completed. Greeting: $personalizedGreeting")
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up personalized content", e)
+            // Fallback to default content
+            binding.tvWelcomeTitle.text = "Welcome to Heal Flow!"
+            binding.tvToolbarTitle.text = "HEAL"
+        }
+    }
+
+    private fun navigateToLogin() {
+        try {
+            Log.d(TAG, "Navigating to LoginActivity")
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error navigating to LoginActivity", e)
+            finish()
         }
     }
 
@@ -149,6 +202,18 @@ class MainActivity : AppCompatActivity() {
         try {
             Log.d(TAG, "MainActivity resumed")
 
+            // Check if user is still logged in
+            if (!sessionManager.isLoggedIn()) {
+                Log.d(TAG, "User session expired, navigating to login")
+                navigateToLogin()
+                return
+            }
+
+            // Refresh personalized content in case time changed (for greeting)
+            if (currentDestination == "home") {
+                setupPersonalizedContent()
+            }
+
             // Reset to home when returning from activities (not from habits fragment)
             if (currentDestination != "home" && currentDestination != "habits") {
                 showHomeView()
@@ -177,7 +242,10 @@ class MainActivity : AppCompatActivity() {
                     .commit()
             }
 
-            binding.tvToolbarTitle.text = getString(R.string.main_toolbar_title)
+            // Reset toolbar title to personalized version
+            val firstName = sessionManager.getFirstName()
+            binding.tvToolbarTitle.text = "AURA - $firstName"
+
             currentDestination = "home"
             habitFragment = null
 

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 
 class ThirdOnboard : AppCompatActivity() {
 
@@ -15,11 +14,10 @@ class ThirdOnboard : AppCompatActivity() {
         // Find buttons
         val btnGetStarted = findViewById<Button>(R.id.btn_get_started)
 
-        // Get Started button - Navigate to MainActivity (simplified)
+        // Get Started button - Navigate to LoginActivity
         btnGetStarted.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
-
     }
 }
